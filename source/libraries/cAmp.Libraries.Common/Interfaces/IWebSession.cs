@@ -1,0 +1,15 @@
+﻿using System;
+
+namespace cAmp.Libraries.Common.Interfaces
+{
+    public interface IWebSession
+    {
+        Guid Id { get; set; }
+        Guid UserId { get; set; }
+        string UserType { get; set; }
+        Guid PersonId { get; set; }
+        string GivenName { get; set; }
+        string FamilyName { get; set; }
+        string Email { get; set; }
+    }
+}
