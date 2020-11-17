@@ -6,30 +6,30 @@ namespace cAmp.Libraries.Common.Objects
     public class Library
     {
         private List<Artist> _artists;
-        private SortedList<string, Artist> _artistsByName;
+        private Dictionary<string, Artist> _artistsByName;
         private Dictionary<Guid, Artist> _artistsById;
 
         private List<SoundFile> _soundFiles;
         private Dictionary<Guid, SoundFile> _soundFilesById;
-        private SortedList<string, SoundFile> _soundFilesByName;
+        private Dictionary<string, List<SoundFile>> _soundFilesByName;
 
         private List<Album> _albums;
         private Dictionary<Guid, Album> _albumsById;
-        private SortedList<string, Album> _albumsByName;
+        private Dictionary<string, List<Album>> _albumsByName;
 
 
         public Library()
         {
             _artists = new List<Artist>();
-            _artistsByName = new SortedList<string, Artist>();
+            _artistsByName = new Dictionary<string, Artist>();
             _artistsById = new Dictionary<Guid, Artist>();
 
             _albums = new List<Album>();
-            _albumsByName = new SortedList<string, Album>();
+            _albumsByName = new Dictionary<string, List<Album>>();
             _albumsById = new Dictionary<Guid, Album>();
 
             _soundFiles = new List<SoundFile>();
-            _soundFilesByName = new SortedList<string, SoundFile>();
+            _soundFilesByName = new Dictionary<string, List<SoundFile>>();
             _soundFilesById = new Dictionary<Guid, SoundFile>();
         }
 
@@ -41,21 +41,51 @@ namespace cAmp.Libraries.Common.Objects
         {
             _soundFiles.Add(soundFile);
             _soundFilesById.Add(soundFile.Id, soundFile);
-            _soundFilesByName.Add(soundFile.Filename, soundFile);
+
+            //Find the list of files of this name if it exists
+            List<SoundFile> files;
+            if (_soundFilesByName.ContainsKey(soundFile.Title))
+            {
+                files = _soundFilesByName[soundFile.Title];
+            }
+            else
+            {
+                //Create one if it doesn't
+                files = new List<SoundFile>();
+                _soundFilesByName.Add(soundFile.Title, files);
+            }
+
+            //Add the file to the list
+            files.Add(soundFile);
         }
 
         public void Add(Artist artist)
         {
             _artists.Add(artist);
-            _artistsByName.Add(artist.Name, artist);
             _artistsById.Add(artist.Id, artist);
+            _artistsByName.Add(artist.Name, artist);
         }
 
         public void Add(Album album)
         {
             _albums.Add(album);
-            _albumsByName.Add(album.Name, album);
             _albumsById.Add(album.Id, album);
+
+            //Find the list of files of this name if it exists
+            List<Album> albums;
+            if (_albumsByName.ContainsKey(album.Name))
+            {
+                albums = _albumsByName[album.Name];
+            }
+            else
+            {
+                //Create one if it doesn't
+                albums = new List<Album>();
+                _albumsByName.Add(album.Name, albums);
+            }
+
+            //Add the file to the list
+            albums.Add(album);
         }
 
         public bool ContainsArtist(string artistName)
@@ -63,7 +93,7 @@ namespace cAmp.Libraries.Common.Objects
             return _artistsByName.ContainsKey(artistName);
         }
 
-        public Artist GetArtist(string artistName)
+        public Artist GetArtistByName(string artistName)
         {
             return _artistsByName[artistName];
         }
@@ -81,6 +111,11 @@ namespace cAmp.Libraries.Common.Objects
         public SoundFile GetSoundFile(Guid soundFileId)
         {
             return _soundFilesById[soundFileId];
+        }
+
+        public Album GetAlbum(Guid albumId)
+        {
+            return _albumsById[albumId];
         }
 
     }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using cAmp.Libraries.Common.Interfaces;
+using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +10,17 @@ namespace cAmp.Libraries.Common.Controllers
 {
     public class SoundFileController : ControllerBase
     {
-        private FileService _fileService;
-        private IcAmpLogger _logger;
+        private readonly FileService _fileService;
+        private readonly LibraryService _libraryService;
+        private readonly IcAmpLogger _logger;
         
         public SoundFileController(
             FileService fileService,
+            LibraryService libraryService,
             IcAmpLogger logger)
         {
             _fileService = fileService;
+            _libraryService = libraryService;
             _logger = logger;
         }
 
@@ -40,6 +45,14 @@ namespace cAmp.Libraries.Common.Controllers
             }
 
             return NotFound();
+        }
+
+        [HttpGet]
+        [Route("api/soundfiles")]
+        public ActionResult<List<SoundFile>> GetSoundFiles()
+        {
+            var soundFiles = _libraryService.GetSoundFiles();
+            return Ok(soundFiles);
         }
     }
 }

@@ -45,9 +45,10 @@ namespace cAmp.Libraries.Common.Managers
                     string artist = "Unknown";
                     string album = null;
                     string[] genre = null;
-                    uint? trackNumber = null;
+                    uint trackNumber = 0;
 
-                    if (tag != null)
+                    if (tag != null
+                        && tag.Title != null)
                     {
                         title = tag.Title;
                         artist = string.Join(",", tag.Performers);
@@ -59,22 +60,38 @@ namespace cAmp.Libraries.Common.Managers
                     {
                         string filename = Path.GetFileNameWithoutExtension(file);
 
-                        string[] parts = filename.Split("-");
+                        if (filename.Contains("-"))
+                        {
+                            string[] parts = filename.Split("-");
 
-                        if (parts.Length == 1)
-                        {
-                            title = parts[0].Trim();
-                        }
-                        else if (parts.Length == 2)
-                        {
-                            artist = parts[0].Trim();
-                            title = parts[1].Trim();
+                            if (parts.Length == 1)
+                            {
+                                title = parts[0].Trim();
+                            }
+                            else if (parts.Length == 2)
+                            {
+                                artist = parts[0].Trim();
+                                title = parts[1].Trim();
+                            }
+                            else
+                            {
+                                artist = parts[0].Trim();
+                                album = parts[1].Trim();
+                                title = parts[2].Trim();
+                            }
                         }
                         else
                         {
-                            artist = parts[0].Trim();
-                            album = parts[1].Trim();
-                            title = parts[2].Trim();
+                            string directory = Path.GetDirectoryName(file);
+                            string[] parts = directory.Split(Path.DirectorySeparatorChar);
+
+                            title = filename;
+
+                            if (parts.Length > 2)
+                            {
+                                album = parts[parts.Length - 1];
+                                artist = parts[parts.Length - 2];
+                            }
                         }
                     }
 
@@ -87,7 +104,7 @@ namespace cAmp.Libraries.Common.Managers
                     }
                     else
                     {
-                        artistObject = output.GetArtist(artist);
+                        artistObject = output.GetArtistByName(artist);
                     }
 
                     Album albumObject = null;
@@ -110,9 +127,10 @@ namespace cAmp.Libraries.Common.Managers
                         Artist = artistObject,
                         Filename = file,
                         Title = title,
+                        TrackNumber = trackNumber
                     };
 
-                    if (genre.Length > 0)
+                    if (genre?.Length > 0)
                     {
                         soundFile.Genre.AddRange(genre);
                     }

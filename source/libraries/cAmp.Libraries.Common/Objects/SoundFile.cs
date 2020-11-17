@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TagLib.Riff;
 
 namespace cAmp.Libraries.Common.Objects
 {
@@ -16,6 +15,8 @@ namespace cAmp.Libraries.Common.Objects
         public string Title { get; set; }
         public string Filename { get; set; }
         public List<string> Genre { get; set; }
+        public uint TrackNumber { get; set; }
+
 
 
         public Artist Artist { get; set; }
