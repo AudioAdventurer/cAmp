@@ -96,16 +96,6 @@ namespace cAmp.Server.Console
                 });
             });
 
-
-            app.UseCors(x =>
-            {
-                x.AllowAnyHeader();
-                x.AllowAnyOrigin();
-                x.AllowAnyMethod();
-            });
-
-            app.UseAuthentication();
-
             DefaultFilesOptions defaultFileOptions = new DefaultFilesOptions();
             defaultFileOptions.DefaultFileNames.Clear();
             defaultFileOptions.DefaultFileNames.Add("index.html");
@@ -119,6 +109,21 @@ namespace cAmp.Server.Console
             };
 
             app.UseStaticFiles(staticFileOptions);
+            app.UseRouting();
+
+            app.UseCors(x =>
+            {
+                x.AllowAnyHeader();
+                x.AllowAnyOrigin();
+                x.AllowAnyMethod();
+            });
+
+            app.UseAuthentication();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             //app.UseMvc();
         }

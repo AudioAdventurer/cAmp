@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Services;
@@ -23,27 +24,36 @@ namespace cAmp.Libraries.Common.Controllers
 
         [HttpGet]
         [Route("api/artists")]
-        public ActionResult<Artist> GetArtists()
+        public ActionResult<UserInterfaceObjects.Artist> GetArtists()
         {
-            var artist = _libraryService.GetArtists();
+            var artist = _libraryService
+                .GetArtists()
+                .ToUserInterfaceObjects();
+
             return Ok(artist);
         }
 
         [HttpGet]
         [Route("api/artists/{artistId:Guid}")]
-        public ActionResult<Artist> GetArtist(
+        public ActionResult<UserInterfaceObjects.Artist> GetArtist(
             [FromRoute] Guid artistId)
         {
-            var artist = _libraryService.GetArtist(artistId);
+            var artist = _libraryService
+                .GetArtist(artistId)
+                .ToUserInterfaceObject();
+
             return Ok(artist);
         }
 
         [HttpGet]
         [Route("api/artists/{artistId:Guid}/soundfiles")]
-        public ActionResult<List<SoundFile>> GetSoundFiles(
+        public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles(
             [FromRoute] Guid artistId)
         {
-            var soundFiles = _libraryService.GetSoundFilesByArtist(artistId);
+            var soundFiles = _libraryService
+                .GetSoundFilesByArtist(artistId)
+                .ToUserInterfaceObjects();
+
             return Ok(soundFiles);
         }
     }

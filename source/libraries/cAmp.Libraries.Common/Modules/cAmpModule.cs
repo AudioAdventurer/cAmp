@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
+using cAmp.Libraries.Common.Controllers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Logging;
 using cAmp.Libraries.Common.Managers;
@@ -34,7 +35,12 @@ namespace cAmp.Libraries.Common.Modules
                 }).As<Library>()
                 .SingleInstance();
 
+            //Register Services
             builder.RegisterType<FileService>();
+            builder.RegisterType<LibraryService>();
+
+            //Register Controllers
+            builder.RegisterType<ArtistController>();
 
         }
     }

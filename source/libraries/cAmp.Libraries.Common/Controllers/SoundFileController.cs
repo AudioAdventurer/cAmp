@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Services;
@@ -49,9 +50,12 @@ namespace cAmp.Libraries.Common.Controllers
 
         [HttpGet]
         [Route("api/soundfiles")]
-        public ActionResult<List<SoundFile>> GetSoundFiles()
+        public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles()
         {
-            var soundFiles = _libraryService.GetSoundFiles();
+            var soundFiles = _libraryService
+                .GetSoundFiles()
+                .ToUserInterfaceObjects();
+
             return Ok(soundFiles);
         }
     }
