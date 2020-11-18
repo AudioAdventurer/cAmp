@@ -12,6 +12,7 @@ namespace cAmp.Libraries.Common.Objects
         private List<SoundFile> _soundFiles;
         private Dictionary<Guid, SoundFile> _soundFilesById;
         private Dictionary<string, List<SoundFile>> _soundFilesByName;
+        private Dictionary<string, SoundFile> _soundFilesByFileName;
 
         private List<Album> _albums;
         private Dictionary<Guid, Album> _albumsById;
@@ -31,6 +32,7 @@ namespace cAmp.Libraries.Common.Objects
             _soundFiles = new List<SoundFile>();
             _soundFilesByName = new Dictionary<string, List<SoundFile>>();
             _soundFilesById = new Dictionary<Guid, SoundFile>();
+            _soundFilesByFileName = new Dictionary<string, SoundFile>();
         }
 
         public IReadOnlyList<Artist> Artists => _artists;
@@ -41,6 +43,7 @@ namespace cAmp.Libraries.Common.Objects
         {
             _soundFiles.Add(soundFile);
             _soundFilesById.Add(soundFile.Id, soundFile);
+            _soundFilesByFileName.Add(soundFile.Filename, soundFile);
 
             //Find the list of files of this name if it exists
             List<SoundFile> files;
