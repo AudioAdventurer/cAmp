@@ -1,10 +1,9 @@
 import Environment from "../env.js";
-import axios from 'axios';
 import AlbumDao from "../Data/AlbumDao";
 import ArtistDao from "../Data/ArtistDao";
 import SoundFileDao from "../Data/SoundFileDao";
 
-class cAmpService {
+export default class cAmpService {
   static JWT = "";
   static UserProperties = null;
   static UserAccess = {};
@@ -50,6 +49,10 @@ class cAmpService {
   static getSoundFile(soundFileId) {
     const dao = new SoundFileDao(Environment.BASE_URL);
     return dao.getSoundFile(soundFileId);
+  }
+
+  static logout() {
+    //do something
   }
 
 }
