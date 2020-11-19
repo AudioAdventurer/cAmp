@@ -22,10 +22,8 @@ export default class Home extends Component {
   renderLander() {
     return (
       <div className="lander">
-        <h1>Satellite Audio Recorder</h1>
-        <p>This is a tool designed to assist with creating Audio Drama when performers are primarily in remote
-          locations.
-        </p>
+        <h1>cAmp Audio Player</h1>
+        <p>A simple container based audio player.</p>
       </div>
     );
   }
