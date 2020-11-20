@@ -21,7 +21,8 @@ namespace cAmp.Libraries.Common.Objects
             {
                 Id = Id,
                 Artist = Artist?.Name,
-                Name = Name
+                Name = Name,
+                ArtistId = Artist?.Id
             };
         }
     }

@@ -13,8 +13,8 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      isAuthenticated: false,
-      isAuthenticating: true,
+      isAuthenticated: true,
+      isAuthenticating: false,
       messageList:[]
     };
   }
@@ -28,27 +28,40 @@ export default class App extends Component {
     this.userHasAuthenticated(false);
   };
 
-
   renderLoggedInNavBar() {
     return(
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Item>
-            <LinkContainer to="/projects">
+            <LinkContainer to="/artists">
               <Nav.Link>
-                Projects
+                Artists
+              </Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+          <Nav.Item>
+            <LinkContainer to="/albums">
+              <Nav.Link>
+                Albums
+              </Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+          <Nav.Item>
+            <LinkContainer to="/songs">
+              <Nav.Link>
+                Songs
+              </Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
+          <Nav.Item>
+            <LinkContainer to="/playlists">
+              <Nav.Link>
+                Play Lists
               </Nav.Link>
             </LinkContainer>
           </Nav.Item>
         </Nav>
         <Nav >
-          <Nav.Item>
-            <LinkContainer to="/profile">
-              <Nav.Link>
-                Profile
-              </Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
           <Nav.Item onClick={this.handleLogout}>
             <Nav.Link>
               Logout

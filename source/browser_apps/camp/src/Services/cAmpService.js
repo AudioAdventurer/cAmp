@@ -19,10 +19,25 @@ export default class cAmpService {
     return dao.getArtist(artistId);
   }
 
+  static getAlbumsByArtist(artistId) {
+    const dao = new ArtistDao(Environment.BASE_URL);
+    return dao.getArtistAlbums(artistId);
+  }
+
+  static getSoundFilesByArtist(artistId) {
+    const dao = new ArtistDao(Environment.BASE_URL);
+    return dao.getArtistSoundFiles(artistId);
+  }
+
   //Albums
   static getAlbums() {
     const dao = new AlbumDao(Environment.BASE_URL);
     return dao.getAlbums();
+  }
+
+  static getAlbumByArtist(artistId){
+    const dao = new AlbumDao(Environment.BASE_URL);
+    return dao.get
   }
 
   static getAlbum(albumId) {

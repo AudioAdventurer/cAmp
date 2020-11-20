@@ -25,7 +25,11 @@ namespace cAmp.Libraries.Common.Objects
                 Id = Id,
                 Title = Title,
                 TrackNumber =  TrackNumber,
-                Genre = Genre
+                Genre = Genre,
+                Artist = Artist?.Name,
+                ArtistId = Artist?.Id,
+                Album = Album?.Name,
+                AlbumId = Album?.Id
             };
         }
     }

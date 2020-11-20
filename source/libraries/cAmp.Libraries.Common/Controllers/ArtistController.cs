@@ -34,6 +34,18 @@ namespace cAmp.Libraries.Common.Controllers
         }
 
         [HttpGet]
+        [Route("api/artists/{artistId:Guid}/albums")]
+        public ActionResult<UserInterfaceObjects.Artist> GetAlbums(
+            [FromRoute] Guid artistId)
+        {
+            var albums = _libraryService
+                .GetAlbumsByArtist(artistId)
+                .ToUserInterfaceObjects();
+
+            return Ok(albums);
+        }
+
+        [HttpGet]
         [Route("api/artists/{artistId:Guid}")]
         public ActionResult<UserInterfaceObjects.Artist> GetArtist(
             [FromRoute] Guid artistId)

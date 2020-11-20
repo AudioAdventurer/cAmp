@@ -15,5 +15,10 @@ namespace cAmp.Libraries.Common.UserInterfaceObjects
 
         public List<string> Genre { get; set; }
 
+        public string Artist { get; set; }
+        public Guid? ArtistId { get; set; }
+
+        public string Album { get; set; }
+        public Guid? AlbumId { get; set; }
     }
 }

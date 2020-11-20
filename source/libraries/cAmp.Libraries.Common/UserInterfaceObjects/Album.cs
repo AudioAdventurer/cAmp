@@ -1,5 +1,5 @@
-﻿using System;
-using cAmp.Libraries.Common.Interfaces;
+﻿using cAmp.Libraries.Common.Interfaces;
+using System;
 
 namespace cAmp.Libraries.Common.UserInterfaceObjects
 {
@@ -10,5 +10,7 @@ namespace cAmp.Libraries.Common.UserInterfaceObjects
         public string Name { get; set; }
 
         public string Artist { get; set; }
+
+        public Guid? ArtistId { get; set; }
     }
 }
