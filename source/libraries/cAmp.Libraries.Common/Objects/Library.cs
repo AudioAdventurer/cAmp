@@ -98,12 +98,22 @@ namespace cAmp.Libraries.Common.Objects
 
         public Artist GetArtistByName(string artistName)
         {
-            return _artistsByName[artistName];
+            if (_artistsByName.ContainsKey(artistName))
+            {
+                return _artistsByName[artistName];
+            }
+
+            return null;
         }
 
         public Artist GetArtist(Guid artistId)
         {
-            return _artistsById[artistId];
+            if (_artistsById.ContainsKey(artistId))
+            {
+                return _artistsById[artistId];
+            }
+
+            return null;
         }
 
         public bool ContainsSoundFile(Guid soundFileId)
@@ -113,12 +123,22 @@ namespace cAmp.Libraries.Common.Objects
 
         public SoundFile GetSoundFile(Guid soundFileId)
         {
-            return _soundFilesById[soundFileId];
+            if (_soundFilesById.ContainsKey(soundFileId))
+            {
+                return _soundFilesById[soundFileId];
+            }
+
+            return null;
         }
 
         public Album GetAlbum(Guid albumId)
         {
-            return _albumsById[albumId];
+            if (_albumsById.ContainsKey(albumId))
+            {
+                return _albumsById[albumId];
+            }
+
+            return null;
         }
 
     }

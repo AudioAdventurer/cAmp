@@ -24,20 +24,11 @@ export default class cAmpService {
     return dao.getArtistAlbums(artistId);
   }
 
-  static getSoundFilesByArtist(artistId) {
-    const dao = new ArtistDao(Environment.BASE_URL);
-    return dao.getArtistSoundFiles(artistId);
-  }
 
   //Albums
   static getAlbums() {
     const dao = new AlbumDao(Environment.BASE_URL);
     return dao.getAlbums();
-  }
-
-  static getAlbumByArtist(artistId){
-    const dao = new AlbumDao(Environment.BASE_URL);
-    return dao.get
   }
 
   static getAlbum(albumId) {
@@ -64,6 +55,11 @@ export default class cAmpService {
   static getSoundFile(soundFileId) {
     const dao = new SoundFileDao(Environment.BASE_URL);
     return dao.getSoundFile(soundFileId);
+  }
+
+  static setSoundFileComplete(soundFileId, playedToEnd) {
+    const dao = new SoundFileDao(Environment.BASE_URL);
+    return dao.setSoundFileComplete(soundFileId, playedToEnd);
   }
 
   static logout() {

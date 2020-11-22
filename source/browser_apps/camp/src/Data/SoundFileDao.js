@@ -18,4 +18,12 @@ export default class SoundFileDao extends BaseDao {
     return this.readFile(`/soundfiles/${soundFileId}`);
   }
 
+  setSoundFileComplete(soundFileId, playedToEnd) {
+    if (playedToEnd) {
+      return this.write(`/soundfiles/${soundFileId}/completed`);
+    } else {
+      return this.write(`/soundfiles/${soundFileId}/skipped`);
+    }
+  }
 }
+

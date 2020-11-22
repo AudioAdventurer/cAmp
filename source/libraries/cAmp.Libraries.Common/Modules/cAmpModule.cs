@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.IO;
 using Autofac;
 using cAmp.Libraries.Common.Controllers;
+using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Logging;
 using cAmp.Libraries.Common.Managers;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Repos;
 using cAmp.Libraries.Common.Services;
+using LiteDB;
 
 namespace cAmp.Libraries.Common.Modules
 {
@@ -41,7 +42,23 @@ namespace cAmp.Libraries.Common.Modules
 
             //Register Controllers
             builder.RegisterType<ArtistController>();
+            builder.RegisterType<AlbumController>();
+            builder.RegisterType<GenreController>();
+            builder.RegisterType<SoundFileController>();
+            builder.RegisterType<StatusController>();
 
+            //Register LiteDB
+            builder.Register<LiteDatabase>(c =>
+                {
+                    DirectoryHelper.EnsureDirectory(_config.DbFolder);
+                    string dbName = Path.Combine(_config.DbFolder, "MusicData.db");
+                    var db = new LiteDatabase(dbName);
+                    return db;
+                }).As<LiteDatabase>()
+                .SingleInstance();
+
+            //Register Repos
+            builder.RegisterType<PlayHistoryRepo>();
         }
     }
 }

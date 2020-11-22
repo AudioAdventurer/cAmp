@@ -18,6 +18,7 @@ export default ({childProps}) =>
     <AuthenticatedRoute path="/artists/:artistId/albums" exact component={Albums} props={childProps} />
     <AuthenticatedRoute path="/artists/:artistId/songs" exact component={SoundFiles} props={childProps} />
     <AuthenticatedRoute path="/albums" exact component={Albums} props={childProps} />
+    <AuthenticatedRoute path="/albums/:albumId" exact component={Albums} props={childProps} />
     <AuthenticatedRoute path="/albums/:albumId/songs" exact component={SoundFiles} props={childProps} />
     <AuthenticatedRoute path="/songs" exact component={SoundFiles} props={childProps} />
     <Route component={NotFound}/>

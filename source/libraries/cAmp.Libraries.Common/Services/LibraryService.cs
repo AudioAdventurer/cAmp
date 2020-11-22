@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Repos;
 
 namespace cAmp.Libraries.Common.Services
 {
     public class LibraryService
     {
         private readonly Library _library;
+        private readonly PlayHistoryRepo _playHistoryRepo;
         private readonly IcAmpLogger _logger;
 
         public LibraryService(
             Library library,
+            PlayHistoryRepo playHistoryRepo,
             IcAmpLogger logger)
         {
             _library = library;
+            _playHistoryRepo = playHistoryRepo;
             _logger = logger;
         }
 
@@ -87,6 +91,20 @@ namespace cAmp.Libraries.Common.Services
         public Artist GetArtist(Guid artistId)
         {
             return _library.GetArtist(artistId);
+        }
+
+        public void FinishedSoundFile(Guid soundFileId, bool playedToEnd)
+        {
+            var soundFile = _library.GetSoundFile(soundFileId);
+
+            var history = new PlayHistory
+            {
+                Filename = soundFile.Filename,
+                Ended = DateTime.UtcNow,
+                PlayedToEnd = playedToEnd
+            };
+
+            _playHistoryRepo.Save(history);
         }
     }
 }

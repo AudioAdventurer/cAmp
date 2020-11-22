@@ -58,5 +58,21 @@ namespace cAmp.Libraries.Common.Controllers
 
             return Ok(soundFiles);
         }
+
+        [HttpPost]
+        [Route("api/soundfiles/{soundFileId:Guid}/completed")]
+        public ActionResult FinishedSoundFile([FromRoute] Guid soundFileId)
+        {
+            _libraryService.FinishedSoundFile(soundFileId, true);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("api/soundfiles/{soundFileId:Guid}/skipped")]
+        public ActionResult Skipped([FromRoute] Guid soundFileId)
+        {
+            _libraryService.FinishedSoundFile(soundFileId, false);
+            return Ok();
+        }
     }
 }
