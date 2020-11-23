@@ -6,10 +6,8 @@ namespace cAmp.Libraries.Common.Interfaces
     {
         Guid Id { get; set; }
         Guid UserId { get; set; }
-        string UserType { get; set; }
-        Guid PersonId { get; set; }
-        string GivenName { get; set; }
-        string FamilyName { get; set; }
-        string Email { get; set; }
+        string FirstName { get; set; }
+        string LastName { get; set; }
+        string Username { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using cAmp.Libraries.Common.Interfaces;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace cAmp.Libraries.Common.Objects
 {
@@ -14,6 +15,7 @@ namespace cAmp.Libraries.Common.Objects
         public string Filename { get; set; }
         public List<string> Genre { get; set; }
         public uint TrackNumber { get; set; }
+        public uint Year { get; set; }
         
         public Artist Artist { get; set; }
         public Album Album { get; set; }

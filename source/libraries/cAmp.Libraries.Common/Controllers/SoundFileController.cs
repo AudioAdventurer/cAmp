@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
-using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cAmp.Libraries.Common.Controllers
 {
+    [Authorize]
+    [Produces("application/json")]
     public class SoundFileController : ControllerBase
     {
         private readonly FileService _fileService;
@@ -63,7 +65,9 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/soundfiles/{soundFileId:Guid}/completed")]
         public ActionResult FinishedSoundFile([FromRoute] Guid soundFileId)
         {
-            _libraryService.FinishedSoundFile(soundFileId, true);
+            var userId = User.GetUserId();
+
+            _libraryService.FinishedSoundFile(userId, soundFileId, true);
             return Ok();
         }
 
@@ -71,7 +75,9 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/soundfiles/{soundFileId:Guid}/skipped")]
         public ActionResult Skipped([FromRoute] Guid soundFileId)
         {
-            _libraryService.FinishedSoundFile(soundFileId, false);
+            var userId = User.GetUserId();
+
+            _libraryService.FinishedSoundFile(userId, soundFileId, false);
             return Ok();
         }
     }

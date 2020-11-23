@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using cAmp.Libraries.Common.Interfaces;
 using LiteDB;
 
@@ -29,6 +31,12 @@ namespace cAmp.Libraries.Common.Repos
         {
             var obj = Collection.FindById(id);
             return obj;
+        }
+
+        public List<T> GetAll()
+        {
+            return Collection.FindAll()
+                .ToList();
         }
     }
 }

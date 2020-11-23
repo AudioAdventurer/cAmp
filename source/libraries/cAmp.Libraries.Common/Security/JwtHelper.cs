@@ -36,12 +36,10 @@ namespace cAmp.Libraries.Common.Security
         {
             ClaimsIdentity claimsIdentity = new ClaimsIdentity();
             claimsIdentity.AddClaim(new Claim("UserId", userSession.UserId.ToString()));
-            claimsIdentity.AddClaim(new Claim("PersonId", userSession.PersonId.ToString()));
             claimsIdentity.AddClaim(new Claim("SessionId", userSession.Id.ToString()));
-            claimsIdentity.AddClaim(new Claim("Email", userSession.Email));
-            claimsIdentity.AddClaim(new Claim("GivenName", userSession.GivenName));
-            claimsIdentity.AddClaim(new Claim("FamilyName", userSession.FamilyName));
-            claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, userSession.UserType));
+            claimsIdentity.AddClaim(new Claim("Username", userSession.Username));
+            claimsIdentity.AddClaim(new Claim("FirstName", userSession.FirstName));
+            claimsIdentity.AddClaim(new Claim("LastName", userSession.LastName));
 
             return claimsIdentity;
         }

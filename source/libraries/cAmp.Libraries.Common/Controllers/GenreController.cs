@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cAmp.Libraries.Common.Controllers
 {
+    [Authorize]
+    [Produces("application/json")]
     public class GenreController : ControllerBase
     {
         private readonly LibraryService _libraryService;

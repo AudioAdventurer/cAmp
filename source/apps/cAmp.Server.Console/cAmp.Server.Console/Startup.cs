@@ -117,8 +117,9 @@ namespace cAmp.Server.Console
                 x.AllowAnyOrigin();
                 x.AllowAnyMethod();
             });
-
+            
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

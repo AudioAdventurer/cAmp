@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using cAmp.Libraries.Common.Objects;
-using Id3;
 
 namespace cAmp.Libraries.Common.Managers
 {
@@ -46,6 +42,7 @@ namespace cAmp.Libraries.Common.Managers
                     string album = null;
                     string[] genre = null;
                     uint trackNumber = 0;
+                    uint year = 0;
 
                     if (tag != null
                         && tag.Title != null)
@@ -55,6 +52,7 @@ namespace cAmp.Libraries.Common.Managers
                         album = tag.Album;
                         genre = tag.Genres;
                         trackNumber = tag.Track;
+                        year = tag.Year;
                     }
                     else
                     {
@@ -127,7 +125,8 @@ namespace cAmp.Libraries.Common.Managers
                         Artist = artistObject,
                         Filename = file,
                         Title = title,
-                        TrackNumber = trackNumber
+                        TrackNumber = trackNumber,
+                        Year = year
                     };
 
                     if (genre?.Length > 0)

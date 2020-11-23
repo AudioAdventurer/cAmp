@@ -16,7 +16,7 @@ export default class Artists extends Component {
 
     this.state = {
       artistId: artistId,
-      albums:[]
+      artists:[]
     };
   }
 

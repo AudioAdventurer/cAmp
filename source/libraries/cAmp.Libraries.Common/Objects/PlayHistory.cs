@@ -17,5 +17,7 @@ namespace cAmp.Libraries.Common.Objects
         public bool PlayedToEnd { get; set; }
 
         public Guid Id { get; set; }
+
+        public Guid UserId { get; set; }
     }
 }

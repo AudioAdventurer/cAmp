@@ -18,6 +18,7 @@ namespace cAmp.Libraries.Common.Objects
         private Dictionary<Guid, Album> _albumsById;
         private Dictionary<string, List<Album>> _albumsByName;
 
+        private readonly Dictionary<Guid, SoundFileQueue> _soundFileQueues;
 
         public Library()
         {
@@ -33,6 +34,8 @@ namespace cAmp.Libraries.Common.Objects
             _soundFilesByName = new Dictionary<string, List<SoundFile>>();
             _soundFilesById = new Dictionary<Guid, SoundFile>();
             _soundFilesByFileName = new Dictionary<string, SoundFile>();
+
+            _soundFileQueues = new Dictionary<Guid, SoundFileQueue>();
         }
 
         public IReadOnlyList<Artist> Artists => _artists;
@@ -139,6 +142,85 @@ namespace cAmp.Libraries.Common.Objects
             }
 
             return null;
+        }
+
+        public SoundFileQueue GetQueueByUser(Guid userId)
+        {
+            if (_soundFileQueues.ContainsKey(userId))
+            {
+                return _soundFileQueues[userId];
+            }
+
+            SoundFileQueue queue = new SoundFileQueue();
+            _soundFileQueues.Add(userId, queue);
+            return queue;
+        }
+
+        public List<SoundFile> GetQueueSoundFiles(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            return queue.ToList();
+        }
+
+        public SoundFile GetQueueNextSoundFile(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            return queue.NextSoundFile();
+        }
+
+        public SoundFile GetQueueCurrentSoundFile(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            return queue.CurrentSoundFile;
+        }
+
+        public SoundFile AdvanceQueue(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            return queue.AdvanceToNextSoundFile();
+        }
+
+        public void AddSongToQueue(Guid userId, Guid soundFileId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            if (_soundFilesById.ContainsKey(soundFileId))
+            {
+                var soundFile = _soundFilesById[soundFileId];
+
+                queue.Enqueue(soundFile);
+            }
+        }
+
+        public void AddAlbumToQueue(Guid userId, Guid albumId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            if (_albumsById.ContainsKey(albumId))
+            {
+                var album = _albumsById[albumId];
+
+                queue.Enqueue(album.Songs);
+            }
+        }
+
+        public void AddArtistToQueue(Guid userId, Guid artistId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            if (_artistsById.ContainsKey(artistId))
+            {
+                var artist = _artistsById[artistId];
+
+                foreach (var album in artist.Albums)
+                {
+                    queue.Enqueue(album.Songs);
+                }
+            }
         }
 
     }

@@ -37,15 +37,23 @@ namespace cAmp.Libraries.Common.Modules
                 .SingleInstance();
 
             //Register Services
+            builder.RegisterType<AuthService>();
             builder.RegisterType<FileService>();
+            builder.RegisterType<JwtService>()
+                .WithParameter("jwtSecret", _config.JwtSecret);
             builder.RegisterType<LibraryService>();
+            builder.RegisterType<UserService>();
+            
 
             //Register Controllers
             builder.RegisterType<ArtistController>();
             builder.RegisterType<AlbumController>();
+            builder.RegisterType<AuthController>();
             builder.RegisterType<GenreController>();
+            builder.RegisterType<QueueController>();
             builder.RegisterType<SoundFileController>();
             builder.RegisterType<StatusController>();
+            builder.RegisterType<UserController>();
 
             //Register LiteDB
             builder.Register<LiteDatabase>(c =>
@@ -59,6 +67,7 @@ namespace cAmp.Libraries.Common.Modules
 
             //Register Repos
             builder.RegisterType<PlayHistoryRepo>();
+            builder.RegisterType<UserRepo>();
         }
     }
 }

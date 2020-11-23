@@ -13,8 +13,8 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      isAuthenticated: true,
-      isAuthenticating: false,
+      isAuthenticated: false,
+      isAuthenticating: true,
       messageList:[]
     };
   }
@@ -60,8 +60,22 @@ export default class App extends Component {
               </Nav.Link>
             </LinkContainer>
           </Nav.Item>
+          <Nav.Item>
+            <LinkContainer to="/queue">
+              <Nav.Link>
+                Queue
+              </Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
         </Nav>
         <Nav >
+          <Nav.Item>
+            <LinkContainer to="/playlists">
+              <Nav.Link>
+                Users
+              </Nav.Link>
+            </LinkContainer>
+          </Nav.Item>
           <Nav.Item onClick={this.handleLogout}>
             <Nav.Link>
               Logout

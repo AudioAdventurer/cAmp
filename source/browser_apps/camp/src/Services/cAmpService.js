@@ -2,6 +2,8 @@ import Environment from "../env.js";
 import AlbumDao from "../Data/AlbumDao";
 import ArtistDao from "../Data/ArtistDao";
 import SoundFileDao from "../Data/SoundFileDao";
+import AuthDao from "../Data/AuthDao";
+import * as axios from "axios";
 
 export default class cAmpService {
   static JWT = "";
@@ -23,7 +25,6 @@ export default class cAmpService {
     const dao = new ArtistDao(Environment.BASE_URL);
     return dao.getArtistAlbums(artistId);
   }
-
 
   //Albums
   static getAlbums() {
@@ -62,8 +63,24 @@ export default class cAmpService {
     return dao.setSoundFileComplete(soundFileId, playedToEnd);
   }
 
+  //Authentication
+  static login(username) {
+    const dao = new AuthDao(Environment.BASE_URL);
+    return dao.login(username);
+  }
+
+  static getUsersForLogin(username) {
+    const dao = new AuthDao(Environment.BASE_URL);
+    return dao.getUsersForLogin();
+  }
+
   static logout() {
-    //do something
+    this.JWT = "";
+  }
+
+  static setJwt(jwt) {
+    this.JWT = jwt;
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.JWT;
   }
 
 }

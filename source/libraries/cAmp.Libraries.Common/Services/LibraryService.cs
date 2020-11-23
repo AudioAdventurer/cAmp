@@ -93,7 +93,7 @@ namespace cAmp.Libraries.Common.Services
             return _library.GetArtist(artistId);
         }
 
-        public void FinishedSoundFile(Guid soundFileId, bool playedToEnd)
+        public void FinishedSoundFile(Guid userId, Guid soundFileId, bool playedToEnd)
         {
             var soundFile = _library.GetSoundFile(soundFileId);
 
@@ -101,7 +101,8 @@ namespace cAmp.Libraries.Common.Services
             {
                 Filename = soundFile.Filename,
                 Ended = DateTime.UtcNow,
-                PlayedToEnd = playedToEnd
+                PlayedToEnd = playedToEnd,
+                UserId = userId
             };
 
             _playHistoryRepo.Save(history);

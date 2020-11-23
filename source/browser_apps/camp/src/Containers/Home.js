@@ -1,9 +1,7 @@
 import "./Home.css";
 import React, {Component} from "react";
 import {Row, Col} from "react-bootstrap";
-import cAmpService from "../Services/cAmpService";
 import {Redirect} from 'react-router-dom'
-import {toast} from "react-toastify";
 
 export default class Home extends Component {
   constructor(props) {
@@ -23,7 +21,7 @@ export default class Home extends Component {
     return (
       <div className="lander">
         <h1>cAmp Audio Player</h1>
-        <p>A simple container based audio player.</p>
+        <p>A simple container based audio player designed for home use.</p>
       </div>
     );
   }

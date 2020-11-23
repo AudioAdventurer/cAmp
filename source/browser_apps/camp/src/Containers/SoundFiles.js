@@ -167,7 +167,9 @@ export default class SoundFiles extends Component {
         });
 
       this.setState({
-        howl: null
+        howl: null,
+        blob: null,
+        currentSoundFile: null
       }, () => {
         this.handlePlayNext();
       });

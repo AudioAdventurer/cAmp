@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using cAmp.Libraries.Common.Interfaces;
-using TagLib.Riff;
 
 namespace cAmp.Libraries.Common.UserInterfaceObjects
 {
@@ -12,6 +11,8 @@ namespace cAmp.Libraries.Common.UserInterfaceObjects
         public string Title { get; set; }
 
         public uint TrackNumber { get; set; }
+
+        public uint Year { get; set; }
 
         public List<string> Genre { get; set; }
 

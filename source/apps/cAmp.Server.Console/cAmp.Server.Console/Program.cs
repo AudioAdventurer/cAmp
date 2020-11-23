@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Services;
 
 namespace cAmp.Server.Console
 {
@@ -77,7 +78,12 @@ namespace cAmp.Server.Console
                 })
                 .Build();
 
+            //Bootstrap the library
             var library = host.Services.GetRequiredService<Library>();
+
+            //Validate that a user exists on startup
+            var userService = host.Services.GetRequiredService<UserService>();
+            userService.EnsureUserExists();
 
             host.Run();
         }
