@@ -18,5 +18,23 @@ namespace cAmp.Libraries.Common.Helpers
 
             return output;
         }
+
+        /// <summary>
+        /// Copies the list, but the objects are the same as in the source.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static List<T> Copy<T>(this List<T> source)
+        {
+            var output = new List<T>();
+
+            foreach (T obj in source)
+            {
+                output.Add(obj);
+            }
+
+            return output;
+        }
     }
 }
