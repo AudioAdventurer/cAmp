@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
-import {Row, Col} from "react-bootstrap";
 import { BsFillSkipEndFill } from "react-icons/bs";
 
-export default class Play extends Component {
+export default class Next extends Component {
   render() {
-    return (<Row>
-      <Col>
-        <div className="float-md-right">
-          <span id="refresh"
-                onClick={() => this.props.onNext(this.props.soundFileId)}>
-            <BsFillSkipEndFill/>
-          </span>
-        </div>
-      </Col>
-    </Row>);
+    return (
+      <div className="float-md-right">
+        <span id={`next${this.props.id}`}
+              onClick={
+                () => {
+                  if (this.props.soundFileId !== undefined
+                      && this.props.soundFileId !== null) {
+                    this.props.onNext(this.props.soundFileId)
+                  } else {
+                    this.props.onNext();
+                  }
+                }}>
+          <BsFillSkipEndFill/>
+        </span>
+      </div>);
   }
 }

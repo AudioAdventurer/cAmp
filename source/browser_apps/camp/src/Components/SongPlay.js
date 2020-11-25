@@ -4,15 +4,16 @@ import { BsFillPlayFill } from "react-icons/bs";
 
 export default class Play extends Component {
   render() {
-    return (<Row>
-      <Col>
-        <div className="float-md-right">
-          <span id="refresh"
-                onClick={() => this.props.onPlay(this.props.soundFileId)}>
-            <BsFillPlayFill/>
-          </span>
-        </div>
-      </Col>
-    </Row>);
+    return (
+      <Row>
+        <Col>
+          <div className="float-md-right">
+            <span id="refresh"
+                  onClick={() => this.props.onPlay(this.props.soundFileId)}>
+              <BsFillPlayFill/>
+            </span>
+          </div>
+        </Col>
+      </Row>);
   }
 }

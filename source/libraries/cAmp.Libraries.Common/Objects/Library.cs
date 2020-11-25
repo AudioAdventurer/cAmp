@@ -146,14 +146,17 @@ namespace cAmp.Libraries.Common.Objects
 
         public SoundFileQueue GetQueueByUser(Guid userId)
         {
-            if (_soundFileQueues.ContainsKey(userId))
+            lock (_soundFileQueues)
             {
-                return _soundFileQueues[userId];
-            }
+                if (_soundFileQueues.ContainsKey(userId))
+                {
+                    return _soundFileQueues[userId];
+                }
 
-            SoundFileQueue queue = new SoundFileQueue();
-            _soundFileQueues.Add(userId, queue);
-            return queue;
+                SoundFileQueue queue = new SoundFileQueue();
+                _soundFileQueues.Add(userId, queue);
+                return queue;
+            }
         }
 
         public void ClearQueue(Guid userId)

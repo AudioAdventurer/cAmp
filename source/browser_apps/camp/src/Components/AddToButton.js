@@ -57,6 +57,7 @@ export default class LoginButton extends Component {
         id={this.props.id}
         title="Add to"
         variant="secondary"
+        size="sm"
         onSelect={this.handleClick}>
         <Dropdown.Item
           eventKey="Queue"

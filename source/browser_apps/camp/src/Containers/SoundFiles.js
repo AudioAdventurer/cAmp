@@ -47,6 +47,16 @@ export default class SoundFiles extends Component {
     this.loadSongs();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.queuePlayerPlaying === false
+        && this.props.queuePlayerPlaying === true) {
+      if (this.state.currentSoundFile !== undefined
+          && this.state.currentSoundFile !== null) {
+        this.handleStop(this.state.currentSoundFile.id);
+      }
+    }
+  }
+
   componentWillUnmount() {
     let howl = this.state.howl;
     if (howl !== null) {
@@ -143,7 +153,10 @@ export default class SoundFiles extends Component {
   }
 
   handlePlay(soundFileId) {
-    this.props.queuePlayerShouldStop();
+    if (this.props.queuePlayerShouldStop !== undefined
+        && this.props.queuePlayerShouldStop !== null) {
+      this.props.queuePlayerShouldStop();
+    }
 
     let results = this.findSoundFile(soundFileId);
 
@@ -208,7 +221,13 @@ export default class SoundFiles extends Component {
     if (this.state.howl != null) {
       this.state.howl.stop();
 
-      cAmpService.setSoundFileComplete(this.state.currentSoundFile.id, false);
+      cAmpService.setSoundFileComplete(this.state.currentSoundFile.id, false)
+        .then(r => {
+
+        })
+        .catch(e => {
+          //Do nothing.  Not critical
+        });
     }
 
     this.setState({

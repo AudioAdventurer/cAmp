@@ -62,9 +62,10 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFiles = _library.GetQueueSoundFiles(userId);
+            var soundFiles = _library.GetQueueSoundFiles(userId)
+                .ToUserInterfaceObjects();
 
-            return Ok(soundFiles.ToUserInterfaceObjects());
+            return Ok(soundFiles);
         }
 
         [HttpGet]
@@ -73,7 +74,8 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFile = _library.GetQueueNextSoundFile(userId);
+            var soundFile = _library.GetQueueNextSoundFile(userId)?
+                .ToUserInterfaceObject();
 
             return Ok(soundFile);
         }
@@ -84,7 +86,8 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFile = _library.GetQueueCurrentSoundFile(userId);
+            var soundFile = _library.GetQueueCurrentSoundFile(userId)?
+                .ToUserInterfaceObject();
 
             return Ok(soundFile);
         }
@@ -95,7 +98,8 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFile = _library.AdvanceQueue(userId);
+            var soundFile = _library.AdvanceQueue(userId)?
+                .ToUserInterfaceObject();
 
             return Ok(soundFile);
         }
@@ -106,9 +110,9 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFile = _library.GetQueueSize(userId);
+            var size = _library.GetQueueSize(userId);
 
-            return Ok(soundFile);
+            return Ok(size);
         }
 
         [HttpGet]
