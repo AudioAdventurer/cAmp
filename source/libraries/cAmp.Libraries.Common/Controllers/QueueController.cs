@@ -49,7 +49,7 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/artist/{artistId:Guid}")]
         public ActionResult AddArtistToQueue([FromRoute] Guid artistId)
         {
-            Guid userId = Guid.Empty;
+            Guid userId = User.GetUserId();
 
             _library.AddArtistToQueue(userId, artistId);
 
@@ -60,7 +60,7 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue")]
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetQueue()
         {
-            Guid userId = Guid.Empty;
+            Guid userId = User.GetUserId();
 
             var soundFiles = _library.GetQueueSoundFiles(userId);
 
@@ -71,7 +71,7 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/next")]
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetNextSoundFile()
         {
-            Guid userId = Guid.Empty;
+            Guid userId = User.GetUserId();
 
             var soundFile = _library.GetQueueNextSoundFile(userId);
 
@@ -82,7 +82,7 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/current")]
         public ActionResult<UserInterfaceObjects.SoundFile> GetCurrentSoundFile()
         {
-            Guid userId = Guid.Empty;
+            Guid userId = User.GetUserId();
 
             var soundFile = _library.GetQueueCurrentSoundFile(userId);
 
@@ -93,11 +93,33 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/advance")]
         public ActionResult<UserInterfaceObjects.SoundFile> AdvanceToNextSoundFile()
         {
-            Guid userId = Guid.Empty;
+            Guid userId = User.GetUserId();
 
             var soundFile = _library.AdvanceQueue(userId);
 
             return Ok(soundFile);
+        }
+
+        [HttpGet]
+        [Route("api/queue/size")]
+        public ActionResult<int> GetQueueSize()
+        {
+            Guid userId = User.GetUserId();
+
+            var soundFile = _library.GetQueueSize(userId);
+
+            return Ok(soundFile);
+        }
+
+        [HttpGet]
+        [Route("api/queue/clear")]
+        public ActionResult ClearQueue()
+        {
+            Guid userId = User.GetUserId();
+
+            _library.ClearQueue(userId);
+
+            return Ok();
         }
     }
 }

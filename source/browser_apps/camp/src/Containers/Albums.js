@@ -4,6 +4,7 @@ import cAmpService from "../Services/cAmpService";
 import {Row, Col, Table} from "react-bootstrap";
 import { Link } from 'react-router-dom'
 import {toast} from "react-toastify";
+import AddToButton from "../Components/AddToButton";
 
 export default class Albums extends Component {
   constructor(props) {
@@ -24,10 +25,17 @@ export default class Albums extends Component {
       artistId: artistId,
       albums:[]
     };
+
+    this.loadAlbums = this.loadAlbums.bind(this);
+    this.handleQueueModified = this.handleQueueModified.bind(this);
   }
 
   componentDidMount() {
     this.loadAlbums();
+  }
+
+  handleQueueModified() {
+    this.props.queuePlayerShouldRefresh();
   }
 
   loadAlbums() {
@@ -78,6 +86,12 @@ export default class Albums extends Component {
               <td>{item.name}</td>
               <td><Link to={artistUrl}>{item.artist}</Link></td>
               <td><Link to={albumsUrl}>Songs</Link></td>
+              <td>
+                <AddToButton
+                  id={item.id}
+                  type="album"
+                  onQueueModified={this.handleQueueModified}/>
+              </td>
             </tr>
           );
         } else {
@@ -92,7 +106,7 @@ export default class Albums extends Component {
     }
 
     return(
-      <tbody></tbody>);
+      <tbody/>);
   }
 
   render() {
@@ -113,6 +127,7 @@ export default class Albums extends Component {
                 <th>Name</th>
                 <th>Artist</th>
                 <th>Songs</th>
+                <th>Action</th>
               </tr>
               </thead>
               { this.renderTableBody(this.state.albums) }

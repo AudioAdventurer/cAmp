@@ -7,6 +7,7 @@ import {toast} from "react-toastify";
 import SongPlay from "../Components/SongPlay";
 import SongStop from "../Components/SongStop";
 import {Howl} from 'howler';
+import AddToButton from "../Components/AddToButton";
 
 export default class SoundFiles extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ export default class SoundFiles extends Component {
     this.findSoundFile = this.findSoundFile.bind(this);
     this.songFinished = this.songFinished.bind(this);
     this.getFile = this.getFile.bind(this);
+    this.handleQueueModified = this.handleQueueModified.bind(this);
   }
 
   componentDidMount() {
@@ -141,6 +143,8 @@ export default class SoundFiles extends Component {
   }
 
   handlePlay(soundFileId) {
+    this.props.queuePlayerShouldStop();
+
     let results = this.findSoundFile(soundFileId);
 
     if (results !== null) {
@@ -214,6 +218,10 @@ export default class SoundFiles extends Component {
     });
   }
 
+  handleQueueModified() {
+    this.props.queuePlayerShouldRefresh();
+  }
+
   renderMediaButton(soundFileId) {
     if (this.state.currentSoundFile !== undefined
       && this.state.currentSoundFile !== null) {
@@ -240,7 +248,12 @@ export default class SoundFiles extends Component {
               <td>{item.title}</td>
               <td><Link to={artistUrl}>{item.artist}</Link></td>
               <td><Link to={albumsUrl}>{item.album}</Link></td>
-              <td>&nbsp;</td>
+              <td>
+                <AddToButton
+                  id={item.id}
+                  type="soundfile"
+                  onQueueModified={this.handleQueueModified}/>
+              </td>
             </tr>
           );
         } else {

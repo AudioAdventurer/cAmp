@@ -156,6 +156,12 @@ namespace cAmp.Libraries.Common.Objects
             return queue;
         }
 
+        public void ClearQueue(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+            queue.Clear();
+        }
+
         public List<SoundFile> GetQueueSoundFiles(Guid userId)
         {
             var queue = GetQueueByUser(userId);
@@ -221,6 +227,13 @@ namespace cAmp.Libraries.Common.Objects
                     queue.Enqueue(album.Songs);
                 }
             }
+        }
+
+        public int GetQueueSize(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+
+            return queue.QueueSize;
         }
 
     }

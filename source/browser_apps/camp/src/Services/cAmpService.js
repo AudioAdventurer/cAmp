@@ -4,6 +4,8 @@ import ArtistDao from "../Data/ArtistDao";
 import SoundFileDao from "../Data/SoundFileDao";
 import AuthDao from "../Data/AuthDao";
 import * as axios from "axios";
+import UserDao from "../Data/UserDao";
+import QueueDao from "../Data/QueueDao";
 
 export default class cAmpService {
   static JWT = "";
@@ -61,6 +63,68 @@ export default class cAmpService {
   static setSoundFileComplete(soundFileId, playedToEnd) {
     const dao = new SoundFileDao(Environment.BASE_URL);
     return dao.setSoundFileComplete(soundFileId, playedToEnd);
+  }
+
+  //Users
+  static getUsers() {
+    const dao = new UserDao(Environment.BASE_URL);
+    return dao.getUsers();
+  }
+
+  static getUser(userId) {
+    const dao = new UserDao(Environment.BASE_URL);
+    return dao.getUser(userId);
+  }
+
+  static saveUser(user) {
+    const dao = new UserDao(Environment.BASE_URL);
+    return dao.saveUser(user);
+  }
+
+  //Queue
+  static clearQueue() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.clearQueue();
+  }
+
+  static listQueue() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.listQueue();
+  }
+
+  static getNextQueueSong() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.getNextSong();
+  }
+
+  static getCurrentQueueSong() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.getCurrentSong();
+  }
+
+  static advanceToNextQueueSong() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.advanceToNextSong();
+  }
+
+  static addSoundFileToQueue(soundFileId){
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.addSoundFileToQueue(soundFileId);
+  }
+
+  static addAlbumToQueue(albumId) {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.addAlbumToQueue(albumId);
+  }
+
+  static addArtistToQueue(artistId) {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.addArtistToQueue(artistId);
+  }
+
+  static getQueueSize() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.getQueueSize();
   }
 
   //Authentication

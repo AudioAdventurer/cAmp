@@ -16,10 +16,10 @@ namespace cAmp.Libraries.Common.Controllers
         private readonly IcAmpLogger _logger;
 
         public UserController(
-            UserService userSerice,
+            UserService userService,
             IcAmpLogger logger)
         {
-            _userService = userSerice;
+            _userService = userService;
             _logger = logger;
         }
 

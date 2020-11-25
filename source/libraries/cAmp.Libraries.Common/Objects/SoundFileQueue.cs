@@ -13,9 +13,16 @@ namespace cAmp.Libraries.Common.Objects
             _queue = new Queue<SoundFile>();
         }
 
+        public int QueueSize => _queue.Count;
+
         public List<SoundFile> ToList()
         {
             return _queue.ToList();
+        }
+
+        public void Clear()
+        {
+            _queue.Clear();
         }
 
         public SoundFile NextSoundFile()

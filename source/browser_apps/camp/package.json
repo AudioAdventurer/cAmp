@@ -15,7 +15,7 @@
     "react-router-bootstrap": "^0.25.0",
     "react-scripts": "^3.4.1",
     "typescript": "^4.0.5",
-    "uuid": "latest"
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "start": "react-scripts start",

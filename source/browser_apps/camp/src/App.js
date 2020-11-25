@@ -7,6 +7,7 @@ import cAmpService from "./Services/cAmpService";
 import {Nav, Navbar} from "react-bootstrap";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import QueuePlayer from "./Components/QueuePlayer";
 
 export default class App extends Component {
   constructor(props) {
@@ -15,8 +16,21 @@ export default class App extends Component {
     this.state = {
       isAuthenticated: false,
       isAuthenticating: true,
-      messageList:[]
+      messageList:[],
+      queuePlayerPlaying: false,
+      queuePlayerShouldStop: false,
+      queuePlayerShouldRefresh: false,
+      currentSong: null,
+      nextSong: null
     };
+
+    this.handleQueuePlayerPlayStarted = this.handleQueuePlayerPlayStarted.bind(this);
+    this.handleQueuePlayerPlayStopped = this.handleQueuePlayerPlayStopped.bind(this);
+    this.handleQueuePlayerRefreshed = this.handleQueuePlayerRefreshed.bind(this);
+
+    this.handleQueuePlayerShouldStop = this.handleQueuePlayerShouldStop.bind(this);
+    this.handleQueuePlayerShouldRefresh = this.handleQueuePlayerShouldRefresh.bind(this);
+
   }
 
   userHasAuthenticated = authenticated => {
@@ -27,6 +41,49 @@ export default class App extends Component {
     cAmpService.logout();
     this.userHasAuthenticated(false);
   };
+
+  handleQueuePlayerPlayStarted() {
+    this.setState({
+      queuePlayerPlaying: true
+    });
+  }
+
+  handleQueuePlayerPlayStopped() {
+    this.setState({
+      queuePlayerPlaying: false,
+      queuePlayerShouldStop: false
+    });
+  }
+
+  handleQueuePlayerShouldStop(){
+    this.setState({
+      queuePlayerShouldStop: true
+    });
+  }
+
+  handleQueuePlayerRefreshed() {
+    this.setState({
+      queuePlayerShouldRefresh: false
+    });
+  }
+
+  handleQueuePlayerShouldRefresh() {
+    this.setState({
+      queuePlayerShouldRefresh: true
+    });
+  }
+
+  renderQueuePlayer() {
+    return (
+      <QueuePlayer
+        playStarted={this.handleQueuePlayerPlayStarted}
+        playStopped={this.handleQueuePlayerPlayStopped}
+        refreshed={this.handleQueuePlayerRefreshed}
+        shouldStop={this.state.queuePlayerShouldStop}
+        shouldRefresh={this.state.queuePlayerShouldRefresh}
+      />
+    );
+  }
 
   renderLoggedInNavBar() {
     return(
@@ -70,7 +127,7 @@ export default class App extends Component {
         </Nav>
         <Nav >
           <Nav.Item>
-            <LinkContainer to="/playlists">
+            <LinkContainer to="/users">
               <Nav.Link>
                 Users
               </Nav.Link>
@@ -116,7 +173,10 @@ export default class App extends Component {
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated,
-      userHasAuthenticated: this.userHasAuthenticated
+      userHasAuthenticated: this.userHasAuthenticated,
+      queuePlayerPlaying: this.state.queuePlayerPlaying,
+      queuePlayerShouldStop: this.handleQueuePlayerShouldStop,
+      queuePlayerShouldRefresh: this.handleQueuePlayerShouldRefresh
     };
 
     return (
@@ -127,6 +187,7 @@ export default class App extends Component {
           closeOnClick
         />
         { this.renderNavbar() }
+        { this.state.isAuthenticated ? this.renderQueuePlayer() : "" }
         <Routes childProps={childProps} />
       </div>
     );
