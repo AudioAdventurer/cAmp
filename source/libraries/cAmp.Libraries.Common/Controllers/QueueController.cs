@@ -115,7 +115,7 @@ namespace cAmp.Libraries.Common.Controllers
             return Ok(size);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/queue/clear")]
         public ActionResult ClearQueue()
         {

@@ -20,16 +20,19 @@ export default class App extends Component {
       queuePlayerPlaying: false,
       queuePlayerShouldStop: false,
       queuePlayerShouldRefresh: false,
+      currentQueuePlayerSoundFileId: null,
       currentSong: null,
       nextSong: null
     };
 
     this.handleQueuePlayerPlayStarted = this.handleQueuePlayerPlayStarted.bind(this);
     this.handleQueuePlayerPlayStopped = this.handleQueuePlayerPlayStopped.bind(this);
+    this.handleQueuePlayerPlayAdvanced = this.handleQueuePlayerPlayAdvanced.bind(this);
     this.handleQueuePlayerRefreshed = this.handleQueuePlayerRefreshed.bind(this);
 
     this.handleQueuePlayerShouldStop = this.handleQueuePlayerShouldStop.bind(this);
     this.handleQueuePlayerShouldRefresh = this.handleQueuePlayerShouldRefresh.bind(this);
+
 
   }
 
@@ -42,9 +45,10 @@ export default class App extends Component {
     this.userHasAuthenticated(false);
   };
 
-  handleQueuePlayerPlayStarted() {
+  handleQueuePlayerPlayStarted(currentSoundFileId) {
     this.setState({
-      queuePlayerPlaying: true
+      queuePlayerPlaying: true,
+      currentQueuePlayerSoundFileId: currentSoundFileId
     });
   }
 
@@ -52,6 +56,12 @@ export default class App extends Component {
     this.setState({
       queuePlayerPlaying: false,
       queuePlayerShouldStop: false
+    });
+  }
+
+  handleQueuePlayerPlayAdvanced(currentSoundFileId) {
+    this.setState({
+      currentQueuePlayerSoundFileId: currentSoundFileId
     });
   }
 
@@ -78,6 +88,7 @@ export default class App extends Component {
       <QueuePlayer
         playStarted={this.handleQueuePlayerPlayStarted}
         playStopped={this.handleQueuePlayerPlayStopped}
+        playAdvanced={this.handleQueuePlayerPlayAdvanced}
         refreshed={this.handleQueuePlayerRefreshed}
         shouldStop={this.state.queuePlayerShouldStop}
         shouldRefresh={this.state.queuePlayerShouldRefresh}
@@ -176,7 +187,8 @@ export default class App extends Component {
       userHasAuthenticated: this.userHasAuthenticated,
       queuePlayerPlaying: this.state.queuePlayerPlaying,
       queuePlayerShouldStop: this.handleQueuePlayerShouldStop,
-      queuePlayerShouldRefresh: this.handleQueuePlayerShouldRefresh
+      queuePlayerShouldRefresh: this.handleQueuePlayerShouldRefresh,
+      currentQueuePlayerSoundFileId: this.state.currentQueuePlayerSoundFileId
     };
 
     return (

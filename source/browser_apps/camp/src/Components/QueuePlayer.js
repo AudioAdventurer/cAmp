@@ -131,21 +131,27 @@ export default class QueuePlayer extends Component {
               .then(r => {
                 if (r!=null) {
                   this.setState({
-                    nextSoundFile: r
+                    nextSoundFile: r,
+                    nextSoundFileName: r.title
                   })
                 }
               })
               .catch(e => {
                 toast.error(e.message);
               });
+
+            this.props.playAdvanced(this.state.currentSoundFile.id);
           });
+        } else {
+          this.props.playStopped();
         }
       });
+
   }
 
   handleStop() {
-    if (this.state.playing) {
-      if (this.state.howl != null) {
+      if (this.state.howl != null
+          && this.state.howl.playing) {
         this.state.howl.stop();
 
         cAmpService.setSoundFileComplete(this.state.currentSoundFile.id, false)
@@ -157,14 +163,13 @@ export default class QueuePlayer extends Component {
           });
       }
 
-      this.setState({
-        howl: null,
-        blob: null,
-        playing: false
-      }, ()=> {
-        this.props.playStopped();
-      });
-    }
+    this.setState({
+      howl: null,
+      blob: null,
+      playing: false
+    }, ()=> {
+      this.props.playStopped();
+    });
   }
 
   handlePlay() {
@@ -173,7 +178,7 @@ export default class QueuePlayer extends Component {
       this.setState({
         playing: true
       }, ()=> {
-        this.props.playStarted();
+        this.props.playStarted(this.state.currentSoundFile.id);
 
         this.getFile(this.state.currentSoundFile.id);
       });
@@ -249,13 +254,13 @@ export default class QueuePlayer extends Component {
             Queue Player
           </Col>
           <Col>
-            Queue Size: {this.state.queueSize}
+            Queue Count: {this.state.queueSize}
           </Col>
           <Col>
-            Playing: {this.state.playing.toString()}
+            {this.state.playing ? "Playing" : "Stopped" }
           </Col>
           <Col>
-            Should Stop: {this.props.shouldStop.toString()}
+            &nbsp;
           </Col>
         </Row>
         <Row>

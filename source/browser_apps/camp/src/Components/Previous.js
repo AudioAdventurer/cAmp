@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Row, Col} from "react-bootstrap";
 import { BsFillSkipStartFill } from "react-icons/bs";
 
-export default class Play extends Component {
+export default class Previous extends Component {
   render() {
     return (<Row>
       <Col>

@@ -14,13 +14,33 @@ namespace cAmp.Libraries.Common.Objects
             _queue = new Queue<SoundFile>();
         }
 
-        public int QueueSize => _queue.Count;
+        public int QueueSize
+        {
+            get
+            {
+                if (_currentSoundFile != null)
+                {
+                    return _queue.Count + 1;
+                }
+                else
+                {
+                    return _queue.Count;
+                }
+            }
+        }
 
         public List<SoundFile> ToList()
         {
             lock (_lock)
             {
-                return _queue.ToList();
+                var output = _queue.ToList();
+
+                if (_currentSoundFile != null)
+                {
+                    output.Insert(0, _currentSoundFile);
+                }
+
+                return output;
             }
         }
 
@@ -29,6 +49,7 @@ namespace cAmp.Libraries.Common.Objects
             lock (_lock)
             {
                 _queue.Clear();
+                _currentSoundFile = null;
             }
         }
 
@@ -102,7 +123,7 @@ namespace cAmp.Libraries.Common.Objects
                 if (_currentSoundFile == null
                     && _queue.Count > 0)
                 {
-                    _currentSoundFile = _queue.Peek();
+                    _currentSoundFile = _queue.Dequeue();
                 }
             }
         }
