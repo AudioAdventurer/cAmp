@@ -39,7 +39,7 @@ namespace cAmp.Libraries.Common.Security
             claimsIdentity.AddClaim(new Claim("SessionId", userSession.Id.ToString()));
             claimsIdentity.AddClaim(new Claim("Username", userSession.Username));
             claimsIdentity.AddClaim(new Claim("FirstName", userSession.FirstName));
-            claimsIdentity.AddClaim(new Claim("LastName", userSession.LastName));
+            claimsIdentity.AddClaim(new Claim("LastName", userSession.LastName ?? ""));
 
             return claimsIdentity;
         }

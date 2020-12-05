@@ -7,6 +7,7 @@ import Play from "./Play";
 import Next from "./Next";
 import Stop from "./Stop";
 import {Howl} from "howler";
+import RangeSlider from 'react-bootstrap-range-slider';
 
 export default class QueuePlayer extends Component {
 
@@ -23,7 +24,8 @@ export default class QueuePlayer extends Component {
       nextSoundFile: null,
       nextSoundFileName: null,
       blob: null,
-      howl: null
+      howl: null,
+      volume: 100
     };
 
     this.handleShouldStop = this.handleShouldStop.bind(this);
@@ -38,6 +40,7 @@ export default class QueuePlayer extends Component {
     this.getFile = this.getFile.bind(this);
     this.playBlob = this.playBlob.bind(this);
     this.songFinished = this.songFinished.bind(this);
+    this.handleVolumeChanged = this.handleVolumeChanged.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +66,16 @@ export default class QueuePlayer extends Component {
   handleShouldStop(){
     this.handleStop()
     this.props.playStopped();
+  }
+
+  handleVolumeChanged(value) {
+    this.setState({
+      volume: value
+    }, ()=>{
+      if (this.state.howl !== null) {
+        this.state.howl.volume(value / 100.0)
+      }
+    });
   }
 
   refresh() {
@@ -146,7 +159,6 @@ export default class QueuePlayer extends Component {
           this.props.playStopped();
         }
       });
-
   }
 
   handleStop() {
@@ -249,7 +261,7 @@ export default class QueuePlayer extends Component {
   render() {
     return (
       <div className="QueuePlayer">
-        <Row>
+        <Row >
           <Col>
             Queue Player
           </Col>
@@ -263,11 +275,11 @@ export default class QueuePlayer extends Component {
             &nbsp;
           </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row style={{height:'40px'}}>
+          <Col style={{width:'120px'}}>
             Current Song: {this.state.currentSoundFileName}
           </Col>
-          <Col>
+          <Col style={{width:'120px'}}>
             <div style={{width:'40px', float:'left'}}>
               <Play
                 onPlay={this.handlePlay}/>
@@ -280,6 +292,12 @@ export default class QueuePlayer extends Component {
               <Stop
                 onStop={this.handleStop}/>
             </div>
+          </Col>
+          <Col>
+            <RangeSlider
+              value={this.state.volume}
+              onChange={changeEvent => this.handleVolumeChanged(changeEvent.target.value)}
+              />
           </Col>
           <Col>
             Next Song: {this.state.nextSoundFileName}
