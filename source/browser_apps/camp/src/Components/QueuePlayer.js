@@ -85,33 +85,44 @@ export default class QueuePlayer extends Component {
           queueSize: r
         }, () => {
           this.props.refreshed();
+
+          if (r > 0) {
+            cAmpService.getCurrentQueueSong()
+              .then(c => {
+                this.setState({
+                  currentSoundFile: c,
+                  currentSoundFileName: c.title
+                })
+              })
+              .catch(e => {
+                toast.error(e.message);
+              });
+
+            cAmpService.getNextQueueSong()
+              .then(n => {
+                this.setState({
+                  nextSoundFile: n,
+                  nextSoundFileName: n.title
+                })
+              })
+              .catch(e => {
+                toast.error(e.message);
+              });
+          } else {
+            this.setState({
+              currentSoundFile: null,
+              currentSoundFileName: null,
+              nextSoundFile: null,
+              nextSoundFileName:null
+            });
+          }
         });
       })
       .catch(e => {
         toast.error(e.message);
       });
 
-    cAmpService.getCurrentQueueSong()
-      .then(r => {
-        this.setState({
-          currentSoundFile: r,
-          currentSoundFileName: r.title
-        })
-      })
-      .catch(e => {
-        toast.error(e.message);
-      });
 
-    cAmpService.getNextQueueSong()
-      .then(r => {
-        this.setState({
-          nextSoundFile: r,
-          nextSoundFileName: r.title
-        })
-      })
-      .catch(e => {
-        toast.error(e.message);
-      });
   }
 
   handleShouldRefresh() {
@@ -186,6 +197,7 @@ export default class QueuePlayer extends Component {
 
   handlePlay() {
     if (!this.state.playing
+        && this.state.currentSoundFile !== undefined
         && this.state.currentSoundFile !== null) {
       this.setState({
         playing: true
