@@ -276,7 +276,7 @@ export default class QueuePlayer extends Component {
 
     let tempName = name;
 
-    if (name.length > 20) {
+    if (name.length > 25) {
       tempName = name.substring(0, 20) + "...";
     }
 
@@ -301,24 +301,26 @@ export default class QueuePlayer extends Component {
           </Col>
         </Row>
         <Row style={{height:'40px'}}>
-          <Col style={{width:'200px'}}>
+          <Col lg={4}>
             Current: {this.getShortenedName(this.state.currentSoundFileName)}
           </Col>
-          <Col style={{width:'120px'}}>
-            <div style={{width:'40px', float:'left'}}>
-              <Play
-                onPlay={this.handlePlay}/>
-            </div>
-            <div style={{width:'40px', float:'left'}}>
-              <Next
-                onNext={this.handleNext}/>
-            </div>
-            <div style={{width:'40px', float:'left'}}>
-              <Stop
-                onStop={this.handleStop}/>
+          <Col lg={2}>
+            <div style={{width:'120px'}}>
+              <div style={{width:'40px', float:'left'}}>
+                <Play
+                  onPlay={this.handlePlay}/>
+              </div>
+              <div style={{width:'40px', float:'left'}}>
+                <Next
+                  onNext={this.handleNext}/>
+              </div>
+              <div style={{width:'40px', float:'left'}}>
+                <Stop
+                  onStop={this.handleStop}/>
+              </div>
             </div>
           </Col>
-          <Col style={{width:'80px'}}>
+          <Col lg={2}>
             <RangeSlider
               value={this.state.volume}
               style={{width:'80px'}}
@@ -326,7 +328,7 @@ export default class QueuePlayer extends Component {
               onChange={changeEvent => this.handleVolumeChanged(changeEvent.target.value)}
               />
           </Col>
-          <Col style={{width:'200px'}}>
+          <Col lg={4}>
             Next: {this.getShortenedName(this.state.nextSoundFileName)}
           </Col>
         </Row>
