@@ -121,8 +121,6 @@ export default class QueuePlayer extends Component {
       .catch(e => {
         toast.error(e.message);
       });
-
-
   }
 
   handleShouldRefresh() {
@@ -270,6 +268,21 @@ export default class QueuePlayer extends Component {
     }
   }
 
+  getShortenedName(name) {
+    if (name === undefined
+        || name === null) {
+      return "";
+    }
+
+    let tempName = name;
+
+    if (name.length > 20) {
+      tempName = name.substring(0, 20) + "...";
+    }
+
+    return tempName;
+  }
+
   render() {
     return (
       <div className="QueuePlayer">
@@ -288,8 +301,8 @@ export default class QueuePlayer extends Component {
           </Col>
         </Row>
         <Row style={{height:'40px'}}>
-          <Col style={{width:'120px'}}>
-            Current Song: {this.state.currentSoundFileName}
+          <Col style={{width:'200px'}}>
+            Current: {this.getShortenedName(this.state.currentSoundFileName)}
           </Col>
           <Col style={{width:'120px'}}>
             <div style={{width:'40px', float:'left'}}>
@@ -305,14 +318,16 @@ export default class QueuePlayer extends Component {
                 onStop={this.handleStop}/>
             </div>
           </Col>
-          <Col>
+          <Col style={{width:'80px'}}>
             <RangeSlider
               value={this.state.volume}
+              style={{width:'80px'}}
+              size='sm'
               onChange={changeEvent => this.handleVolumeChanged(changeEvent.target.value)}
               />
           </Col>
-          <Col>
-            Next Song: {this.state.nextSoundFileName}
+          <Col style={{width:'200px'}}>
+            Next: {this.getShortenedName(this.state.nextSoundFileName)}
           </Col>
         </Row>
       </div>
