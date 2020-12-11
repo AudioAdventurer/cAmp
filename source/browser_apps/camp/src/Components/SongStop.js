@@ -6,7 +6,7 @@ export default class Stop extends Component {
   render() {
     return (<Row>
       <Col>
-        <div className="float-md-right">
+        <div>
           <span id="refresh"
                 onClick={() => this.props.onStop(this.props.soundFileId)}>
             <BsFillStopFill/>

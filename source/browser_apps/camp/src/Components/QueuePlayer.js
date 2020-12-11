@@ -130,7 +130,8 @@ export default class QueuePlayer extends Component {
   handleNext() {
     cAmpService.advanceToNextQueueSong()
       .then(r => {
-        if (r != null) {
+        if (r !== null
+            && r !== "") {
           this.setState({
             currentSoundFile: r,
             currentSoundFileName: r.title
@@ -165,7 +166,15 @@ export default class QueuePlayer extends Component {
             this.props.playAdvanced(this.state.currentSoundFile.id);
           });
         } else {
-          this.props.playStopped();
+          this.setState({
+            currentSoundFile: null,
+            currentSoundFileName: null,
+            nextSoundFile: null,
+            nextSoundFileName: null,
+            queueSize: 0
+          }, ()=> {
+            this.handleStop();
+          });
         }
       });
   }
@@ -175,13 +184,15 @@ export default class QueuePlayer extends Component {
           && this.state.howl.playing) {
         this.state.howl.stop();
 
-        cAmpService.setSoundFileComplete(this.state.currentSoundFile.id, false)
-          .then(r => {
+        if (this.state.currentSoundFile !== null) {
+          cAmpService.setSoundFileComplete(this.state.currentSoundFile.id, false)
+            .then(r => {
 
-          })
-          .catch(e => {
-            //Do nothing.  Not critical
-          });
+            })
+            .catch(e => {
+              //Do nothing.  Not critical
+            });
+        }
       }
 
     this.setState({

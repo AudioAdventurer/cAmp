@@ -8,6 +8,7 @@ import SongPlay from "../Components/SongPlay";
 import SongStop from "../Components/SongStop";
 import {Howl} from 'howler';
 import AddToButton from "../Components/AddToButton";
+import Favorite from "../Components/Favorite";
 
 export default class SoundFiles extends Component {
   constructor(props) {
@@ -41,6 +42,7 @@ export default class SoundFiles extends Component {
     this.songFinished = this.songFinished.bind(this);
     this.getFile = this.getFile.bind(this);
     this.handleQueueModified = this.handleQueueModified.bind(this);
+    this.handleToggleIsFavorite = this.handleToggleIsFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -252,6 +254,14 @@ export default class SoundFiles extends Component {
     return <SongPlay soundFileId={soundFileId} onPlay={this.handlePlay}/>;
   }
 
+  handleToggleIsFavorite(soundFileId) {
+
+  }
+
+  renderIsFavorite(soundFile) {
+    return <Favorite soundFileId={soundFile.Id} isFavorite={false} onClick={this.handleToggleIsFavorite} />;
+  }
+
   renderTableBody(list) {
     if (list != null
       && list.length > 0) {
@@ -263,6 +273,7 @@ export default class SoundFiles extends Component {
 
           return (
             <tr key={item.id}>
+              <td>{this.renderIsFavorite(item)}</td>
               <td>{this.renderMediaButton(item.id)}</td>
               <td>{item.title}</td>
               <td><Link to={artistUrl}>{item.artist}</Link></td>
@@ -305,7 +316,8 @@ export default class SoundFiles extends Component {
             <Table striped bordered hover>
               <thead>
               <tr>
-                <th></th>
+                <th>Favorite</th>
+                <th>Play</th>
                 <th>Name</th>
                 <th>Artist</th>
                 <th>Album</th>

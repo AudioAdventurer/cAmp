@@ -4,7 +4,7 @@ import { BsFillStopFill } from "react-icons/bs";
 export default class Stop extends Component {
   render() {
     return (
-      <div className="float-md-right">
+      <div>
         <span id={`stop${this.props.id}`}
               onClick={() => this.props.onStop()}>
           <BsFillStopFill/>

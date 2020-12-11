@@ -7,7 +7,7 @@ export default class Play extends Component {
     return (
       <Row>
         <Col>
-          <div className="float-md-right">
+          <div>
             <span id="refresh"
                   onClick={() => this.props.onPlay(this.props.soundFileId)}>
               <BsFillPlayFill/>

@@ -4,7 +4,7 @@ import { BsFillPlayFill } from "react-icons/bs";
 export default class Play extends Component {
   render() {
     return (
-      <div className="float-md-right">
+      <div>
         <span id={`play${this.props.id}`}
               onClick={() => this.props.onPlay()}>
           <BsFillPlayFill/>

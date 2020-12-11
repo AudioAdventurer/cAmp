@@ -4,7 +4,7 @@ import { BsFillSkipEndFill } from "react-icons/bs";
 export default class Next extends Component {
   render() {
     return (
-      <div className="float-md-right">
+      <div>
         <span id={`next${this.props.id}`}
               onClick={
                 () => {
