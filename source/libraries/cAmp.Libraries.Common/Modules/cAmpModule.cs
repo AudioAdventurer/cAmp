@@ -42,6 +42,7 @@ namespace cAmp.Libraries.Common.Modules
             builder.RegisterType<JwtService>()
                 .WithParameter("jwtSecret", _config.JwtSecret);
             builder.RegisterType<LibraryService>();
+            builder.RegisterType<PlayListService>();
             builder.RegisterType<UserService>();
             
 
@@ -50,6 +51,7 @@ namespace cAmp.Libraries.Common.Modules
             builder.RegisterType<AlbumController>();
             builder.RegisterType<AuthController>();
             builder.RegisterType<GenreController>();
+            builder.RegisterType<PlayListController>();
             builder.RegisterType<QueueController>();
             builder.RegisterType<SoundFileController>();
             builder.RegisterType<StatusController>();
@@ -67,6 +69,8 @@ namespace cAmp.Libraries.Common.Modules
 
             //Register Repos
             builder.RegisterType<PlayHistoryRepo>();
+            builder.RegisterType<PlayListRepo>();
+            builder.RegisterType<PlayListSoundFileRepo>();
             builder.RegisterType<UserRepo>();
         }
     }

@@ -47,10 +47,8 @@ namespace cAmp.Libraries.Common.Services
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public void SetPassword(
@@ -75,8 +73,7 @@ namespace cAmp.Libraries.Common.Services
 
             if (user == null)
             {
-                user = new User();
-                user.Id = userId;
+                user = new User {Id = userId};
             }
 
             user.FirstName = firstName;
@@ -91,10 +88,12 @@ namespace cAmp.Libraries.Common.Services
             var users = GetUsers();
             if (users.Count == 0)
             {
-                User user = new User();
-                user.FirstName = "Admin";
-                user.LastName = "User";
-                user.Username = "admin";
+                User user = new User
+                {
+                    FirstName = "Admin", 
+                    LastName = "User", 
+                    Username = "admin"
+                };
 
                 _userRepo.Save(user);
             }

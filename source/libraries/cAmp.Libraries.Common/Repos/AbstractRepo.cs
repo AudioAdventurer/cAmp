@@ -33,10 +33,27 @@ namespace cAmp.Libraries.Common.Repos
             return obj;
         }
 
+        public IEnumerable<T> GetItems(BsonExpression q, int skip = 0, int limit = Int32.MaxValue)
+        {
+            var items = Collection.Find(q, skip, limit);
+            return items;
+        }
+
+        public T GetItem(BsonExpression q)
+        {
+            var item = Collection.FindOne(q);
+            return item;
+        }
+
         public List<T> GetAll()
         {
             return Collection.FindAll()
                 .ToList();
+        }
+
+        public void Delete(Guid id)
+        {
+            Collection.Delete(id);
         }
     }
 }

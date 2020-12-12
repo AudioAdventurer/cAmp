@@ -134,6 +134,16 @@ namespace cAmp.Libraries.Common.Objects
             return null;
         }
 
+        public SoundFile GetSoundFile(string filename)
+        {
+            if (_soundFilesByFileName.ContainsKey(filename))
+            {
+                return _soundFilesByFileName[filename];
+            }
+
+            return null;
+        }
+
         public Album GetAlbum(Guid albumId)
         {
             if (_albumsById.ContainsKey(albumId))
