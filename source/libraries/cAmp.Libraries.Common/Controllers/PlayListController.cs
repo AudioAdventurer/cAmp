@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Services;
+using cAmp.Libraries.Common.UserInterfaceObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,6 +48,19 @@ namespace cAmp.Libraries.Common.Controllers
                 .SavePlayList(userId, playList);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/playlists/{playListId:Guid}")]
+        public ActionResult<UserInterfaceObjects.PlayList> GetPlayList([FromRoute] Guid playListId)
+        {
+            var userId = User.GetUserId();
+
+            var playList = _playListService
+                .GetPlayList(userId, playListId)
+                .ToUserInterfaceObject();
+
+            return Ok(playList);
         }
 
         [HttpDelete]

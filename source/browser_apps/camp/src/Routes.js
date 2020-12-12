@@ -8,6 +8,7 @@ import Home from "./Containers/Home";
 import Artists from "./Containers/Artists";
 import Albums from "./Containers/Albums";
 import PickUser from "./Containers/PickUser";
+import PlayLists from "./Containers/PlayLists"
 import Queue from "./Containers/Queue";
 import SoundFiles from "./Containers/SoundFiles";
 import Users from "./Containers/Users";
@@ -25,6 +26,8 @@ export default ({childProps}) =>
     <AuthenticatedRoute path="/albums" exact component={Albums} props={childProps} />
     <AuthenticatedRoute path="/albums/:albumId" exact component={Albums} props={childProps} />
     <AuthenticatedRoute path="/albums/:albumId/songs" exact component={SoundFiles} props={childProps} />
+    <AuthenticatedRoute path="/playlists" exact component={PlayLists} props={childProps} />
+    <AuthenticatedRoute path="/playlists/:playListId/songs" exact component={SoundFiles} props={childProps} />
     <AuthenticatedRoute path="/queue" exact component={Queue} props={childProps} />
     <AuthenticatedRoute path="/songs" exact component={SoundFiles} props={childProps} />
     <AuthenticatedRoute path="/users" exact component={Users} props={childProps} />

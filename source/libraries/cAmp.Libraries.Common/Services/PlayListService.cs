@@ -52,6 +52,22 @@ namespace cAmp.Libraries.Common.Services
             _playListRepo.Save(playList);
         }
 
+        public PlayList GetPlayList(Guid userId, Guid playListId)
+        {
+            var playList = _playListRepo.GetById(playListId);
+
+            if (playList != null)
+            {
+                if (playList.IsShared
+                    || playList.OwnerUserId == userId)
+                {
+                    return playList;
+                }
+            }
+
+            return null;
+        }
+
         public void DeletePlayList(Guid userId, Guid playListId)
         {
             var playList = _playListRepo.GetById(playListId);
@@ -107,6 +123,58 @@ namespace cAmp.Libraries.Common.Services
                     _playListSoundFileRepo.Delete(plsf.Id);
                 }
             }
+        }
+
+        public void ToggleFavorite(Guid userId, Guid soundFileId)
+        {
+            var soundFile = _library.GetSoundFile(soundFileId);
+
+            if (soundFile != null)
+            {
+                var playList = _playListRepo.GetFavorites(userId);
+
+                var playListSoundFile = _playListSoundFileRepo.GetByPlayListFileName(playList.Id, soundFile.Filename);
+
+                if (playListSoundFile == null)
+                {
+                    AddSoundFileToPlayList(userId, playList.Id, soundFileId);
+                }
+                else
+                {
+                    RemoveSoundFileFromPlayList(userId, playList.Id, soundFileId);
+                }
+            }
+        }
+
+        public void RemoveSoundFileFromFavorites(Guid userId, Guid soundFileId)
+        {
+            var soundFile = _library.GetSoundFile(soundFileId);
+
+            if (soundFile != null)
+            {
+                var playList = _playListRepo.GetFavorites(userId);
+
+                RemoveSoundFileFromPlayList(userId, playList.Id, soundFileId);
+            }
+        }
+
+        public void AddSoundFileToFavorites(Guid userId, Guid soundFileId)
+        {
+            var soundFile = _library.GetSoundFile(soundFileId);
+
+            if (soundFile != null)
+            {
+                var playList = _playListRepo.GetFavorites(userId);
+
+                AddSoundFileToPlayList(userId, playList.Id, soundFileId);
+            }
+        }
+
+        public List<SoundFile> GetFavoritesSoundFiles(Guid userId)
+        {
+            var playList = _playListRepo.GetFavorites(userId);
+
+            return GetSoundFiles(userId, playList.Id);
         }
 
         public List<SoundFile> GetSoundFiles(

@@ -38,11 +38,18 @@ namespace cAmp.Libraries.Common.Repos
             return shared;
         }
 
-        public void EnsureFavoritesPlayList(Guid userId)
+        public PlayList GetFavorites(Guid userId)
         {
-            var playLists = GetByUser(userId);
+            var playList = Collection.FindOne(
+                Query.And(
+                    Query.EQ("OwnerUserId", userId), 
+                    Query.EQ("Name", "Favorites")));
+            return playList;
+        }
 
-            var favorites = playLists.FirstOrDefault(pl => pl.Name == "Favorites");
+        public PlayList EnsureFavoritesPlayList(Guid userId)
+        {
+            var favorites = GetFavorites(userId);
 
             if (favorites == null)
             {
@@ -55,6 +62,8 @@ namespace cAmp.Libraries.Common.Repos
 
                 Save(favorites);
             }
+
+            return favorites;
         }
     }
 }

@@ -24,9 +24,15 @@ export default class SoundFiles extends Component {
       artistId = null;
     }
 
+    let playListId = this.props.match.params.playListId;
+    if (playListId === undefined) {
+      playListId = null;
+    }
+
     this.state = {
       artistId: artistId,
       albumId: albumId,
+      playListId: playListId,
       soundFiles: [],
       currentSoundFilePosition: 0,
       currentSoundFile: null,
@@ -88,6 +94,16 @@ export default class SoundFiles extends Component {
         });
     } else if (this.state.albumId !== null) {
       cAmpService.getSoundFilesByAlbum(this.state.albumId)
+        .then(r => {
+          this.setState({
+            soundFiles: r
+          });
+        })
+        .catch(e => {
+          toast.error(e.message);
+        });
+    } else if (this.state.playListId !== null) {
+      cAmpService.getPlayListSoundFiles(this.state.playListId)
         .then(r => {
           this.setState({
             soundFiles: r
@@ -255,11 +271,17 @@ export default class SoundFiles extends Component {
   }
 
   handleToggleIsFavorite(soundFileId) {
+    cAmpService.toggleSoundFileFavorite(soundFileId)
+      .then(r => {
 
+      })
+      .catch(error => {
+        toast.error(error.message);
+      })
   }
 
   renderIsFavorite(soundFile) {
-    return <Favorite soundFileId={soundFile.Id} isFavorite={false} onClick={this.handleToggleIsFavorite} />;
+    return <Favorite soundFileId={soundFile.id} isFavorite={false} onClick={this.handleToggleIsFavorite} />;
   }
 
   renderTableBody(list) {

@@ -6,6 +6,7 @@ import AuthDao from "../Data/AuthDao";
 import * as axios from "axios";
 import UserDao from "../Data/UserDao";
 import QueueDao from "../Data/QueueDao";
+import PlayListDao from "../Data/PlayListDao";
 
 export default class cAmpService {
   static JWT = "";
@@ -126,6 +127,61 @@ export default class cAmpService {
     const dao = new QueueDao(Environment.BASE_URL);
     return dao.getQueueSize();
   }
+
+  //PlayLists
+  static getPlayLists() {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.getPlayLists();
+  }
+
+  static savePlayList(playList) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.savePlayList(playList);
+  }
+
+  static deletePlayList(playListId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.deletePlayList(playListId);
+  }
+
+  static addSoundFileToPlayList(playListId, soundFileId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.addSoundFileToPlayList(playListId, soundFileId);
+  }
+
+  static removeSoundFileFromPlayList(playListId, soundFileId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.removeSoundFileFromPlayList(playListId, soundFileId);
+  }
+
+  static getPlayListSoundFiles(playListId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.getPlayListSoundFiles(playListId);
+  }
+
+
+  //Favorites
+  static addSoundFileToFavorites(soundFileId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.addSoundFileToFavorites(soundFileId);
+  }
+
+  static removeSoundFileFromFavorites(soundFileId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.removeSoundFileFromFavorites(soundFileId);
+  }
+
+  static toggleSoundFileFavorite(soundFileId) {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.toggleSoundFileFavorite(soundFileId);
+  }
+
+  static getFavoritesSoundFiles() {
+    const dao = new PlayListDao(Environment.BASE_URL);
+    return dao.getFavoritesSoundFiles();
+  }
+
+
 
   //Authentication
   static login(username) {

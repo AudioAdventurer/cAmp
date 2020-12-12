@@ -111,7 +111,7 @@ export default class Albums extends Component {
 
   render() {
     return (
-      <div className="Artists">
+      <div className="Albums">
         <Row>
           <Col>
             <h3>Albums</h3>
