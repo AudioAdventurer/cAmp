@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +14,16 @@ namespace cAmp.Libraries.Common.Controllers
     public class QueueController : ControllerBase
     {
         private readonly Library _library;
+        private readonly LibraryService _libraryService;
         private readonly IcAmpLogger _logger;
 
         public QueueController(
             Library library,
+            LibraryService libraryService,
             IcAmpLogger logger)
         {
             _library = library;
+            _libraryService = libraryService;
             _logger = logger;
         }
 
@@ -65,17 +69,21 @@ namespace cAmp.Libraries.Common.Controllers
             var soundFiles = _library.GetQueueSoundFiles(userId)
                 .ToUserInterfaceObjects();
 
+            _libraryService.ProcessIsFavoriteFlag(userId, soundFiles);
+
             return Ok(soundFiles);
         }
 
         [HttpGet]
         [Route("api/queue/next")]
-        public ActionResult<List<UserInterfaceObjects.SoundFile>> GetNextSoundFile()
+        public ActionResult<UserInterfaceObjects.SoundFile> GetNextSoundFile()
         {
             Guid userId = User.GetUserId();
 
             var soundFile = _library.GetQueueNextSoundFile(userId)?
                 .ToUserInterfaceObject();
+
+            _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
 
             return Ok(soundFile);
         }
@@ -89,6 +97,8 @@ namespace cAmp.Libraries.Common.Controllers
             var soundFile = _library.GetQueueCurrentSoundFile(userId)?
                 .ToUserInterfaceObject();
 
+            _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+
             return Ok(soundFile);
         }
 
@@ -100,6 +110,8 @@ namespace cAmp.Libraries.Common.Controllers
 
             var soundFile = _library.AdvanceQueue(userId)?
                 .ToUserInterfaceObject();
+
+            _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
 
             return Ok(soundFile);
         }

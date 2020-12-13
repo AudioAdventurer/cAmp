@@ -11,18 +11,20 @@ namespace cAmp.Libraries.Common.Services
     {
         private readonly Library _library;
         private readonly PlayHistoryRepo _playHistoryRepo;
+        private readonly PlayListService _playListService;
         private readonly IcAmpLogger _logger;
 
         public LibraryService(
             Library library,
             PlayHistoryRepo playHistoryRepo,
+            PlayListService playListService,
             IcAmpLogger logger)
         {
             _library = library;
             _playHistoryRepo = playHistoryRepo;
+            _playListService = playListService;
             _logger = logger;
         }
-
 
         public List<SoundFile> GetSoundFiles()
         {
@@ -106,6 +108,21 @@ namespace cAmp.Libraries.Common.Services
             };
 
             _playHistoryRepo.Save(history);
+        }
+
+        public void ProcessIsFavoriteFlag(Guid userId, List<IcAmpObject> cAmpObjects)
+        {
+            List<UserInterfaceObjects.SoundFile> soundFiles = cAmpObjects.Cast<UserInterfaceObjects.SoundFile>().ToList();
+
+            _playListService.ProcessIsFavoriteFlag(userId, soundFiles);
+        }
+
+        public void ProcessIsFavoriteFlag(Guid userId, IcAmpObject cAmpObject)
+        {
+            List<UserInterfaceObjects.SoundFile> soundFiles = new List<UserInterfaceObjects.SoundFile>();
+            soundFiles.Add((UserInterfaceObjects.SoundFile) cAmpObject);
+
+            _playListService.ProcessIsFavoriteFlag(userId, soundFiles);
         }
     }
 }

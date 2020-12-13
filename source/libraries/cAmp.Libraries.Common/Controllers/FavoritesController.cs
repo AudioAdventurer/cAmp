@@ -13,13 +13,16 @@ namespace cAmp.Libraries.Common.Controllers
     [Produces("application/json")]
     public class FavoritesController : ControllerBase
     {
+        private readonly LibraryService _libraryService;
         private readonly PlayListService _playListService;
         private readonly IcAmpLogger _logger;
 
         public FavoritesController(
+            LibraryService libraryService,
             PlayListService playListService,
             IcAmpLogger logger)
         {
+            _libraryService = libraryService;
             _playListService = playListService;
             _logger = logger;
         }
@@ -67,6 +70,8 @@ namespace cAmp.Libraries.Common.Controllers
             var soundFiles = _playListService
                 .GetFavoritesSoundFiles(userId)
                 .ToUserInterfaceObjects();
+
+            _libraryService.ProcessIsFavoriteFlag(User.GetUserId(), soundFiles);
 
             return Ok(soundFiles);
         }

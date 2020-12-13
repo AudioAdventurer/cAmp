@@ -54,6 +54,8 @@ namespace cAmp.Libraries.Common.Controllers
                 .GetSoundFilesByAlbum(albumId)
                 .ToUserInterfaceObjects();
 
+            _libraryService.ProcessIsFavoriteFlag(User.GetUserId(), soundFiles);
+
             return Ok(soundFiles);
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Services;
-using cAmp.Libraries.Common.UserInterfaceObjects;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,13 +13,16 @@ namespace cAmp.Libraries.Common.Controllers
     [Produces("application/json")]
     public class PlayListController : ControllerBase
     {
+        private readonly LibraryService _libraryService;
         private readonly PlayListService _playListService;
         private readonly IcAmpLogger _logger;
 
         public PlayListController(
+            LibraryService libraryService,
             PlayListService playListService,
             IcAmpLogger logger)
         {
+            _libraryService = libraryService;
             _playListService = playListService;
             _logger = logger;
         }
@@ -110,6 +113,8 @@ namespace cAmp.Libraries.Common.Controllers
             var soundFiles = _playListService
                 .GetSoundFiles(userId, playListId)
                 .ToUserInterfaceObjects();
+
+            _libraryService.ProcessIsFavoriteFlag(User.GetUserId(), soundFiles);
 
             return Ok(soundFiles);
         }

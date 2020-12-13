@@ -14,6 +14,8 @@ namespace cAmp.Libraries.Common.Services
         private readonly Library _library;
         private readonly IcAmpLogger _logger;
 
+        private static Dictionary<Guid, Dictionary<Guid, SoundFile>> UserFavorites = new Dictionary<Guid, Dictionary<Guid, SoundFile>>();
+
         public PlayListService(
             PlayListRepo playListRepo,
             PlayListSoundFileRepo playListSoundFileRepo,
@@ -138,10 +140,12 @@ namespace cAmp.Libraries.Common.Services
                 if (playListSoundFile == null)
                 {
                     AddSoundFileToPlayList(userId, playList.Id, soundFileId);
+                    AddFavoriteToCache(userId, soundFile);
                 }
                 else
                 {
                     RemoveSoundFileFromPlayList(userId, playList.Id, soundFileId);
+                    RemoveFavoriteFromCache(userId, soundFile);
                 }
             }
         }
@@ -155,6 +159,7 @@ namespace cAmp.Libraries.Common.Services
                 var playList = _playListRepo.GetFavorites(userId);
 
                 RemoveSoundFileFromPlayList(userId, playList.Id, soundFileId);
+                RemoveFavoriteFromCache(userId, soundFile);
             }
         }
 
@@ -167,6 +172,7 @@ namespace cAmp.Libraries.Common.Services
                 var playList = _playListRepo.GetFavorites(userId);
 
                 AddSoundFileToPlayList(userId, playList.Id, soundFileId);
+                AddFavoriteToCache(userId, soundFile);
             }
         }
 
@@ -175,6 +181,63 @@ namespace cAmp.Libraries.Common.Services
             var playList = _playListRepo.GetFavorites(userId);
 
             return GetSoundFiles(userId, playList.Id);
+        }
+
+        public void CacheFavoritesInMemory(Guid userId)
+        {
+            var soundFiles = GetFavoritesSoundFiles(userId);
+
+            var dictionary = soundFiles.ToDictionary(sf => sf.Id);
+
+            UserFavorites[userId] = dictionary;
+        }
+
+        public void AddFavoriteToCache(Guid userId, SoundFile soundFile)
+        {
+            if (!UserFavorites.ContainsKey(userId))
+            {
+                CacheFavoritesInMemory(userId);
+            }
+
+            var favorites = UserFavorites[userId];
+
+            if (!favorites.ContainsKey(soundFile.Id))
+            {
+                favorites.Add(soundFile.Id, soundFile);
+            }
+        }
+
+        public void RemoveFavoriteFromCache(Guid userId, SoundFile soundFile)
+        {
+            if (!UserFavorites.ContainsKey(userId))
+            {
+                CacheFavoritesInMemory(userId);
+            }
+
+            var favorites = UserFavorites[userId];
+
+            if (favorites.ContainsKey(soundFile.Id))
+            {
+                favorites.Remove(soundFile.Id);
+            }
+        }
+
+        public void ProcessIsFavoriteFlag(Guid userId, List<UserInterfaceObjects.SoundFile> soundFiles)
+        {
+            if (!UserFavorites.ContainsKey(userId))
+            {
+                CacheFavoritesInMemory(userId);
+            }
+
+            var favorites = UserFavorites[userId];
+
+            foreach (var soundFile in soundFiles)
+            {
+                if (favorites.ContainsKey(soundFile.Id))
+                {
+                    soundFile.IsFavorite = true;
+                }
+            }
         }
 
         public List<SoundFile> GetSoundFiles(

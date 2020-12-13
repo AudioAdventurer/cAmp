@@ -14,6 +14,8 @@ namespace cAmp.Libraries.Common.UserInterfaceObjects
 
         public uint Year { get; set; }
 
+        public bool IsFavorite { get; set; }
+
         public List<string> Genre { get; set; }
 
         public string Artist { get; set; }

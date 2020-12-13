@@ -60,8 +60,43 @@ export default class SoundFiles extends Component {
         && this.props.queuePlayerPlaying === true) {
       if (this.state.currentSoundFile !== undefined
           && this.state.currentSoundFile !== null) {
-        this.handleStop(this.state.currentSoundFile.id);
+        this.handleStop();
+        return;
       }
+    }
+
+    let albumId = this.props.match.params.albumId;
+    if (albumId === undefined) {
+      albumId = null;
+    }
+
+    let artistId = this.props.match.params.artistId;
+    if (artistId === undefined) {
+      artistId = null;
+    }
+
+    let playListId = this.props.match.params.playListId;
+    if (playListId === undefined) {
+      playListId = null;
+    }
+
+    if (this.state.albumId !== albumId
+        || this.state.artistId !== artistId
+        || this.state.playListId !== playListId) {
+      this.handleStop();
+
+      this.setState({
+          artistId: artistId,
+          albumId: albumId,
+          playListId: playListId,
+          soundFiles: [],
+          currentSoundFilePosition: 0,
+          currentSoundFile: null,
+          blob: null,
+          howl: null
+        }, () =>{
+        this.loadSongs();
+      });
     }
   }
 
@@ -235,7 +270,7 @@ export default class SoundFiles extends Component {
     });
   }
 
-  handleStop(soundFileId) {
+  handleStop() {
     if (this.state.howl != null) {
       this.state.howl.stop();
 
@@ -273,7 +308,13 @@ export default class SoundFiles extends Component {
   handleToggleIsFavorite(soundFileId) {
     cAmpService.toggleSoundFileFavorite(soundFileId)
       .then(r => {
+        let soundFiles = this.state.soundFiles;
 
+        soundFiles.forEach(sf => {
+          if (sf.id === soundFileId) {
+            sf.isFavorite = !sf.isFavorite;
+          }
+        });
       })
       .catch(error => {
         toast.error(error.message);
@@ -281,7 +322,7 @@ export default class SoundFiles extends Component {
   }
 
   renderIsFavorite(soundFile) {
-    return <Favorite soundFileId={soundFile.id} isFavorite={false} onClick={this.handleToggleIsFavorite} />;
+    return <Favorite soundFileId={soundFile.id} isFavorite={soundFile.isFavorite} onClick={this.handleToggleIsFavorite} />;
   }
 
   renderTableBody(list) {

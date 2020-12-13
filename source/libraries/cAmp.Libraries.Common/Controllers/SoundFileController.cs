@@ -58,6 +58,8 @@ namespace cAmp.Libraries.Common.Controllers
                 .GetSoundFiles()
                 .ToUserInterfaceObjects();
 
+            _libraryService.ProcessIsFavoriteFlag(User.GetUserId(), soundFiles);
+
             return Ok(soundFiles);
         }
 
