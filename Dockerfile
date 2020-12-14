@@ -5,6 +5,7 @@ WORKDIR /app
 COPY ./source/browser_apps/camp/package.json /app
 RUN npm install
 COPY ./source/browser_apps/camp/. /app
+COPY ./source/browser_apps/camp_prod_env.js /app/src/env.js
 RUN npm run build
 
 # Build .net app

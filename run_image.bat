@@ -1,11 +1,15 @@
+REM Stop image if running
 docker stop cAmp
 
 REM Remove existing
 docker rm cAmp
 
+REM Pull the latest image
+docker pull audioadventurer/camp
+
 REM Run the new image
 docker run -d  ^
-		   -p 8000:8000 ^
+		   -p 8080:8000 ^
 		   -e "CAMP_MUSIC_FOLDER=/Media/Music" ^
 		   -e "CAMP_DATA_FOLDER=/Media/Data" ^
 		   -v c:\Media\Data:/Media/Data ^
