@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
 using Autofac.Extensions.DependencyInjection;
 using cAmp.Libraries.Common.Controllers;
@@ -12,7 +11,6 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using cAmp.Libraries.Common.Objects;
-using cAmp.Libraries.Common.Repos;
 using cAmp.Libraries.Common.Services;
 
 namespace cAmp.Server.Console
@@ -85,17 +83,6 @@ namespace cAmp.Server.Console
             //Validate that a user exists on startup
             var userService = host.Services.GetRequiredService<UserService>();
             userService.EnsureUserExists();
-
-            // var plRepo = host.Services.GetRequiredService<PlayListRepo>();
-            // var users = userService.GetUsers();
-            // foreach (var user in users)
-            // {
-            //     var playLists = plRepo.GetByUser(user.Id);
-            //     foreach (var playList in playLists)
-            //     {
-            //         plRepo.Delete(playList.Id);
-            //     }
-            // }
 
             host.Run();
         }
