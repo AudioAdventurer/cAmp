@@ -83,7 +83,11 @@ namespace cAmp.Libraries.Common.Controllers
             var soundFile = _library.GetQueueNextSoundFile(userId)?
                 .ToUserInterfaceObject();
 
-            _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+            if (soundFile != null)
+            {
+                _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+            }
+            
 
             return Ok(soundFile);
         }
@@ -94,10 +98,14 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFile = _library.GetQueueCurrentSoundFile(userId)?
+            var soundFile = _library
+                .GetQueueCurrentSoundFile(userId)?
                 .ToUserInterfaceObject();
 
-            _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+            if (soundFile != null)
+            {
+                _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+            }
 
             return Ok(soundFile);
         }
@@ -108,10 +116,14 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            var soundFile = _library.AdvanceQueue(userId)?
+            var soundFile = _library
+                .AdvanceQueue(userId)?
                 .ToUserInterfaceObject();
 
-            _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+            if (soundFile != null)
+            {
+                _libraryService.ProcessIsFavoriteFlag(userId, soundFile);
+            }
 
             return Ok(soundFile);
         }
