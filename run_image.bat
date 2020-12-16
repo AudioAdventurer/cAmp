@@ -5,7 +5,7 @@ REM Remove existing
 docker rm cAmp
 
 REM Pull the latest image
-docker pull audioadventurer/camp
+docker pull audioadventurer/camp:latest
 
 REM Run the new image
 REM Adjust your media locations as needed (c:\Media\Data, c:\Media\Music)
