@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
 using cAmp.Libraries.Common.Interfaces;
 
-namespace cAmp.Libraries.Common.Objects
+namespace cAmp.Libraries.Common.Records
 {
-    public class Album : AbstractcAmpObject
+    public record Album : AbstractcAmpRecord
     {
         public Album()
         {
             Songs = new List<SoundFile>();
         }
 
-        public string Name { get; set; }
+        public string Name { get; init; }
 
-        public Artist Artist { get; set; }
+        public Artist Artist { get; init; }
 
-        public List<SoundFile> Songs { get; set; }
+        public List<SoundFile> Songs { get; init; }
+
         public override IcAmpObject ToUserInterfaceObject()
         {
             return new UserInterfaceObjects.Album

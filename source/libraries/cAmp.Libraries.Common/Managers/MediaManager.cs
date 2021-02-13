@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Records;
 
 namespace cAmp.Libraries.Common.Managers
 {

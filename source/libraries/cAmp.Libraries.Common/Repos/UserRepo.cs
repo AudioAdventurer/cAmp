@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Records;
 using LiteDB;
 
 namespace cAmp.Libraries.Common.Repos

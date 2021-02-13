@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Records;
 
 namespace cAmp.Libraries.Common.Helpers
 {
     public static class ListHelper
     {
         public static List<IcAmpObject> ToUserInterfaceObjects<T>(this List<T> libraryObjects) 
-            where T:AbstractcAmpObject
+            where T:AbstractcAmpRecord
         {
             List<IcAmpObject> output = new List<IcAmpObject>();
 

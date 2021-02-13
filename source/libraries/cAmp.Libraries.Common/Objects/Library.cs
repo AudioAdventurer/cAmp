@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using cAmp.Libraries.Common.Records;
 
 namespace cAmp.Libraries.Common.Objects
 {
     public class Library
     {
-        private List<Artist> _artists;
-        private Dictionary<string, Artist> _artistsByName;
-        private Dictionary<Guid, Artist> _artistsById;
+        private readonly List<Artist> _artists;
+        private readonly Dictionary<string, Artist> _artistsByName;
+        private readonly Dictionary<Guid, Artist> _artistsById;
 
-        private List<SoundFile> _soundFiles;
-        private Dictionary<Guid, SoundFile> _soundFilesById;
-        private Dictionary<string, List<SoundFile>> _soundFilesByName;
-        private Dictionary<string, SoundFile> _soundFilesByFileName;
+        private readonly List<SoundFile> _soundFiles;
+        private readonly Dictionary<Guid, SoundFile> _soundFilesById;
+        private readonly Dictionary<string, List<SoundFile>> _soundFilesByName;
+        private readonly Dictionary<string, SoundFile> _soundFilesByFileName;
 
-        private List<Album> _albums;
-        private Dictionary<Guid, Album> _albumsById;
-        private Dictionary<string, List<Album>> _albumsByName;
+        private readonly List<Album> _albums;
+        private readonly Dictionary<Guid, Album> _albumsById;
+        private readonly Dictionary<string, List<Album>> _albumsByName;
 
         private readonly Dictionary<Guid, SoundFileQueue> _soundFileQueues;
 

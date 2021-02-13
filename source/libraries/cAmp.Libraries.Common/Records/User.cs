@@ -1,18 +1,18 @@
 ﻿using cAmp.Libraries.Common.Interfaces;
 
-namespace cAmp.Libraries.Common.Objects
+namespace cAmp.Libraries.Common.Records
 {
-    public class User : AbstractcAmpObject
+    public record User : AbstractcAmpRecord
     {
-        public string FirstName { get; set; }
+        public string FirstName { get; init; }
 
-        public string LastName { get; set; }
+        public string LastName { get; init; }
 
-        public string Username { get; set; }
+        public string Username { get; init; }
 
-        public string HashedPassword { get; set; }
+        public string HashedPassword { get; init; }
 
-        public string Salt { get; set; }
+        public string Salt { get; init; }
 
         public override IcAmpObject ToUserInterfaceObject()
         {

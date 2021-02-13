@@ -6,6 +6,6 @@ namespace cAmp.Libraries.Common.Interfaces
     public interface IcAmpObject
     {
         [BsonId]
-        Guid Id { get; set; }
+        Guid Id { get;  }
     }
 }
