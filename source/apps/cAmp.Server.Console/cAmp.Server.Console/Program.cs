@@ -78,8 +78,11 @@ namespace cAmp.Server.Console
                 .Build();
 
             //Bootstrap the library
-            var library = host.Services.GetRequiredService<Library>();
-
+            Task.Run(() =>
+            {
+                var library = host.Services.GetRequiredService<Library>();
+            });
+            
             //Validate that a user exists on startup
             var userService = host.Services.GetRequiredService<UserService>();
             userService.EnsureUserExists();
