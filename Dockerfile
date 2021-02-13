@@ -14,7 +14,7 @@ RUN mkdir /src
 WORKDIR /src
 COPY ./source .
 RUN dotnet publish apps/cAmp.Server.Console/cAmp.Server.Console.sln --output /build_output
-COPY --from=react-build /app/build /build_output/wwwroot
+COPY --from=react-build /app/dist /build_output/wwwroot
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS dotnet-runtime
