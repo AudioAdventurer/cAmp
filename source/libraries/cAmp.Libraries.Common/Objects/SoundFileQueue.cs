@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using cAmp.Libraries.Common.Records;
 
 namespace cAmp.Libraries.Common.Objects
 {

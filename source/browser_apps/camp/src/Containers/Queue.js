@@ -25,7 +25,10 @@ export default class Queue extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.currentQueuePlayerSoundFileId !== prevProps.currentQueuePlayerSoundFileId) {
+    if (this.props.currentQueuePlayerSoundFileId === null
+        && prevProps.currentQueuePlayerSoundFileId !== null){
+      this.handleRefresh();
+    } else if (this.props.currentQueuePlayerSoundFileId !== prevProps.currentQueuePlayerSoundFileId) {
       this.handleRefresh();
     }
   }

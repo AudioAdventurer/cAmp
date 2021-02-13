@@ -2,17 +2,17 @@
 using cAmp.Libraries.Common.Interfaces;
 using LiteDB;
 
-namespace cAmp.Libraries.Common.Objects
+namespace cAmp.Libraries.Common.Records
 {
-    public abstract class AbstractcAmpObject : IcAmpObject
+    public abstract record AbstractcAmpRecord : IcAmpObject
     {
-        protected AbstractcAmpObject()
+        protected AbstractcAmpRecord()
         {
             Id = Guid.NewGuid();
         }
 
         [BsonId]
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
         public abstract IcAmpObject ToUserInterfaceObject();
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Records;
 using cAmp.Libraries.Common.Repos;
 
 namespace cAmp.Libraries.Common.Services
@@ -55,10 +56,14 @@ namespace cAmp.Libraries.Common.Services
             Guid userId,
             string newPassword)
         {
-            var user = GetUser(userId);
+            var salt = PasswordHelper.GenerateSalt();
+            var hash = PasswordHelper.Hash(newPassword, salt);
 
-            user.Salt = PasswordHelper.GenerateSalt();
-            user.HashedPassword = PasswordHelper.Hash(newPassword, user.Salt);
+            var user = GetUser(userId) with
+            {
+                Salt = salt,
+                HashedPassword = hash
+            };
 
             _userRepo.Save(user);
         }
@@ -76,10 +81,15 @@ namespace cAmp.Libraries.Common.Services
                 user = new User {Id = userId};
             }
 
-            user.FirstName = firstName;
-            user.LastName = lastName;
-            user.Username = userName;
+            //Recreate the user with all info
+            user = user with
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Username = userName
+            };
 
+            //Save the user to the database
             _userRepo.Save(user);
         }
 

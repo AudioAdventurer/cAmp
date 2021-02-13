@@ -174,6 +174,7 @@ export default class QueuePlayer extends Component {
             queueSize: 0
           }, ()=> {
             this.handleStop();
+            this.props.playAdvanced(null);
           });
         }
       });
@@ -243,6 +244,7 @@ export default class QueuePlayer extends Component {
     let howl = new Howl({
       src: [url],
       format: ['mp3'],
+      volume: this.state.volume / 100
     });
 
     howl.once('end', this.songFinished);

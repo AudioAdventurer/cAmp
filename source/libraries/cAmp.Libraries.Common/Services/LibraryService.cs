@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
+using cAmp.Libraries.Common.Records;
 using cAmp.Libraries.Common.Repos;
 
 namespace cAmp.Libraries.Common.Services
