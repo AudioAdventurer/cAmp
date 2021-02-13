@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Records;
 
@@ -9,22 +11,32 @@ namespace cAmp.Libraries.Common.Managers
     public class MediaManager
     {
         private readonly string _musicFolder;
+        private readonly IcAmpLogger _logger;
 
         public MediaManager(
-            string musicFolder)
+            string musicFolder,
+            IcAmpLogger logger)
         {
             _musicFolder = musicFolder;
+            _logger = logger;
         }
 
         public Library LoadLibrary()
         {
-            return LoadLibraryFromFolder(_musicFolder);
-        }
-
-        private Library LoadLibraryFromFolder(string musicFolder)
-        {
             Library output = new Library();
 
+            Task.Run(() =>
+            {
+                PopulateLibraryFromFolder(output, _musicFolder);
+            });
+
+            return output;
+        }
+
+        private void PopulateLibraryFromFolder(Library library, string musicFolder)
+        {
+            _logger.Info("Starting library load");
+            
             List<string> files = Directory
                 .GetFiles(_musicFolder, "*.mp3", SearchOption.AllDirectories)
                 .ToList();
@@ -95,15 +107,15 @@ namespace cAmp.Libraries.Common.Managers
                     }
 
                     Artist artistObject;
-                    if (!output.ContainsArtist(artist))
+                    if (!library.ContainsArtist(artist))
                     {
                         artistObject = new Artist { Name = artist };
 
-                        output.Add(artistObject);
+                        library.Add(artistObject);
                     }
                     else
                     {
-                        artistObject = output.GetArtistByName(artist);
+                        artistObject = library.GetArtistByName(artist);
                     }
 
                     Album albumObject = null;
@@ -116,7 +128,7 @@ namespace cAmp.Libraries.Common.Managers
                             albumObject = new Album { Name = album, Artist = artistObject };
 
                             artistObject.Albums.Add(albumObject);
-                            output.Add(albumObject);
+                            library.Add(albumObject);
                         }
                     }
 
@@ -134,16 +146,14 @@ namespace cAmp.Libraries.Common.Managers
                     {
                         soundFile.Genre.AddRange(genre);
                     }
-                    
-                    output.Add(soundFile);
+
+                    library.Add(soundFile);
 
                     albumObject?.Songs.Add(soundFile);
                 }
             }
 
-            return output;
+            _logger.Info("Completed library load");            
         }
-
-        
     }
 }

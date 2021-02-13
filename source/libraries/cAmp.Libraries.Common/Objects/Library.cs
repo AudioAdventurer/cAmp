@@ -45,54 +45,63 @@ namespace cAmp.Libraries.Common.Objects
 
         public void Add(SoundFile soundFile)
         {
-            _soundFiles.Add(soundFile);
-            _soundFilesById.Add(soundFile.Id, soundFile);
-            _soundFilesByFileName.Add(soundFile.Filename, soundFile);
-
-            //Find the list of files of this name if it exists
-            List<SoundFile> files;
-            if (_soundFilesByName.ContainsKey(soundFile.Title))
+            lock(_soundFiles)
             {
-                files = _soundFilesByName[soundFile.Title];
-            }
-            else
-            {
-                //Create one if it doesn't
-                files = new List<SoundFile>();
-                _soundFilesByName.Add(soundFile.Title, files);
-            }
+                _soundFiles.Add(soundFile);
+                _soundFilesById.Add(soundFile.Id, soundFile);
+                _soundFilesByFileName.Add(soundFile.Filename, soundFile);
 
-            //Add the file to the list
-            files.Add(soundFile);
+                //Find the list of files of this name if it exists
+                List<SoundFile> files;
+                if (_soundFilesByName.ContainsKey(soundFile.Title))
+                {
+                    files = _soundFilesByName[soundFile.Title];
+                }
+                else
+                {
+                    //Create one if it doesn't
+                    files = new List<SoundFile>();
+                    _soundFilesByName.Add(soundFile.Title, files);
+                }
+
+                //Add the file to the list
+                files.Add(soundFile);
+            }            
         }
 
         public void Add(Artist artist)
         {
-            _artists.Add(artist);
-            _artistsById.Add(artist.Id, artist);
-            _artistsByName.Add(artist.Name, artist);
+            lock(_artists)
+            {
+                _artists.Add(artist);
+                _artistsById.Add(artist.Id, artist);
+                _artistsByName.Add(artist.Name, artist);
+            }
         }
 
         public void Add(Album album)
         {
-            _albums.Add(album);
-            _albumsById.Add(album.Id, album);
-
-            //Find the list of files of this name if it exists
-            List<Album> albums;
-            if (_albumsByName.ContainsKey(album.Name))
+            lock(_albums)
             {
-                albums = _albumsByName[album.Name];
-            }
-            else
-            {
-                //Create one if it doesn't
-                albums = new List<Album>();
-                _albumsByName.Add(album.Name, albums);
-            }
+                _albums.Add(album);
+                _albumsById.Add(album.Id, album);
 
-            //Add the file to the list
-            albums.Add(album);
+                //Find the list of files of this name if it exists
+                List<Album> albums;
+                if (_albumsByName.ContainsKey(album.Name))
+                {
+                    albums = _albumsByName[album.Name];
+                }
+                else
+                {
+                    //Create one if it doesn't
+                    albums = new List<Album>();
+                    _albumsByName.Add(album.Name, albums);
+                }
+
+                //Add the file to the list
+                albums.Add(album);
+            }
         }
 
         public bool ContainsArtist(string artistName)
