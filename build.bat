@@ -1,4 +1,4 @@
-set version=v9
+set version=v10
 
 docker image build --no-cache -t audioadventurer/camp .
 

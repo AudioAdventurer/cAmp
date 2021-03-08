@@ -16,6 +16,8 @@ namespace cAmp.Libraries.Common.Records
 
         public List<SoundFile> Songs { get; init; }
 
+        public string Folder { get; init; }
+
         public override IcAmpObject ToUserInterfaceObject()
         {
             return new UserInterfaceObjects.Album

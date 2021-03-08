@@ -10,8 +10,6 @@ namespace cAmp.Libraries.Common.Records
             Id = Guid.NewGuid();
         }
 
-        public Guid Id { get; init; }
-
         public string Name { get; init; }
 
         public string Description { get; init; }

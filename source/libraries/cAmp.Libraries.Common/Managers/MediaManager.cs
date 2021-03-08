@@ -57,12 +57,11 @@ namespace cAmp.Libraries.Common.Managers
                     uint trackNumber = 0;
                     uint year = 0;
 
-                    if (tag != null
-                        && tag.Title != null)
+                    if (tag?.Title != null)
                     {
-                        title = tag.Title;
+                        title = tag.Title.Trim();
                         artist = string.Join(",", tag.Performers);
-                        album = tag.Album;
+                        album = tag.Album.Trim();
                         genre = tag.Genres;
                         trackNumber = tag.Track;
                         year = tag.Year;
@@ -121,11 +120,19 @@ namespace cAmp.Libraries.Common.Managers
                     Album albumObject = null;
                     if (album != null)
                     {
-                        albumObject = artistObject.Albums.FirstOrDefault(a => a.Name == album);
+                        string folder = Path.GetDirectoryName(file).Trim();
+
+                        albumObject = library.Albums.FirstOrDefault(a => a.Name.Equals(album)
+                                                                         && a.Folder.Equals(folder));
 
                         if (albumObject == null)
                         {
-                            albumObject = new Album { Name = album, Artist = artistObject };
+                            albumObject = new Album
+                            {
+                                Name = album, 
+                                Artist = artistObject,
+                                Folder = folder
+                            };
 
                             artistObject.Albums.Add(albumObject);
                             library.Add(albumObject);
