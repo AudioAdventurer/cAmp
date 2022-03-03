@@ -56,7 +56,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../satellite-audio-recording/source/browser_apps/sar_site" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -66,7 +66,6 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
     <property name="ts.external.directory.path" value="C:\SourceCode\cAmp\source\browser_apps\camp\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -131,6 +130,8 @@
       <workItem from="1607869402452" duration="7036000" />
       <workItem from="1613228884280" duration="2113000" />
       <workItem from="1613238602983" duration="8091000" />
+      <workItem from="1646276939474" duration="835000" />
+      <workItem from="1646279858092" duration="604000" />
     </task>
     <servers />
   </component>
