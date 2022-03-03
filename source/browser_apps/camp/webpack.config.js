@@ -11,10 +11,9 @@ module.exports = (_env, args) => {
     context: __dirname,
     devServer: {
       hot: true,
-      host: '0.0.0.0',
+      host: 'local-ipv4',
       port: 3000,
-      open: true,
-      useLocalIp: true
+      open: true
     },
     entry: ['./src/index.js'],
     mode: prod ? "production" : "development",
@@ -31,8 +30,17 @@ module.exports = (_env, args) => {
         },
         {
           test: /\.(png|jpe?g|gif)$/,
-          loader: 'url-loader?limit=10000&name=img/[name].[ext]'
+          use: [
+            {
+              loader: "url-loader",
+              options: {
+                limit:10000,
+                mimeType: "image/png",
+                encoding: true
+              }
+          }]
         }
+
       ]
     },
     output: {
@@ -48,7 +56,7 @@ module.exports = (_env, args) => {
       new HtmlWebpackPlugin({
         template: './src/index.html',
       }),
-      ... (prod ? [] : [new webpack.HotModuleReplacementPlugin(), new ReactRefreshWebpackPlugin()])
+      ... (prod ? [] : [new ReactRefreshWebpackPlugin()])
     ]
   };
 }
