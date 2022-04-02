@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 using Autofac;
 using cAmp.Libraries.Common.Interfaces;
@@ -18,7 +16,7 @@ namespace cAmp.Server.Console
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -52,7 +50,7 @@ namespace cAmp.Server.Console
 
         public void Configure(
             IApplicationBuilder app,
-            IHostingEnvironment env,
+            IWebHostEnvironment env,
             IcAmpLogger logger)
         {
             app.UseExceptionHandler(errorApp =>

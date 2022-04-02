@@ -185,6 +185,12 @@ namespace cAmp.Libraries.Common.Objects
             queue.Clear();
         }
 
+        public void ShuffleQueue(Guid userId)
+        {
+            var queue = GetQueueByUser(userId);
+            
+        }
+
         public List<SoundFile> GetQueueSoundFiles(Guid userId)
         {
             var queue = GetQueueByUser(userId);

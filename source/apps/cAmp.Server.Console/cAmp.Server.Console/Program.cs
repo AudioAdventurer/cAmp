@@ -57,10 +57,7 @@ namespace cAmp.Server.Console
                         };
                         options.Events = new JwtBearerEvents
                         {
-                            OnAuthenticationFailed = context =>
-                            {
-                                return Task.CompletedTask;
-                            }
+                            OnAuthenticationFailed = context => Task.CompletedTask
                         };
                     });
                 })

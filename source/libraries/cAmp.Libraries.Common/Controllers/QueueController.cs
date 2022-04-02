@@ -149,5 +149,16 @@ namespace cAmp.Libraries.Common.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("api/queue/shuffle")]
+        public ActionResult ShuffleQueue()
+        {
+            Guid userId = User.GetUserId();
+
+            _library.ClearQueue(userId);
+
+            return Ok();
+        }
     }
 }

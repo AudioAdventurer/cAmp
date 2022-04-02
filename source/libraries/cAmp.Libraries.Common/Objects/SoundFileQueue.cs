@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using cAmp.Libraries.Common.Records;
 
 namespace cAmp.Libraries.Common.Objects
@@ -54,6 +55,24 @@ namespace cAmp.Libraries.Common.Objects
             }
         }
 
+        public void ShuffleRemaining()
+        {
+            lock (_lock)
+            {
+                var songs = _queue.ToList();
+
+                _queue.Clear();
+
+                while (songs.Count > 0)
+                {
+                    int selected = RandomNumberGenerator.GetInt32(0, songs.Count);
+
+                    _queue.Enqueue(songs[selected]);
+                    songs.RemoveAt(selected);
+                }
+            }
+        }
+
         public SoundFile NextSoundFile()
         {
             lock (_lock)
@@ -91,7 +110,6 @@ namespace cAmp.Libraries.Common.Objects
 
                 return _currentSoundFile;
             }
-
         }
 
         public void Enqueue(SoundFile soundFile)
@@ -111,6 +129,22 @@ namespace cAmp.Libraries.Common.Objects
                 foreach (var soundFile in soundFiles)
                 {
                     _queue.Enqueue(soundFile);
+                }
+
+                EnsureCurrentSoundFileSet();
+            }
+        }
+
+        public void ShuffleEnqueue(List<SoundFile> soundFiles)
+        {
+            lock (_lock)
+            {
+                while (soundFiles.Count > 0)
+                {
+                    int selected = RandomNumberGenerator.GetInt32(0, soundFiles.Count);
+
+                    _queue.Enqueue(soundFiles[selected]);
+                    soundFiles.RemoveAt(selected);
                 }
 
                 EnsureCurrentSoundFileSet();
