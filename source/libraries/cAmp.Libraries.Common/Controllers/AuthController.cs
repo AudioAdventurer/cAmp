@@ -34,6 +34,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<LoginResponse> Login(
             [FromRoute] string username)
         {
+            _logger.Info($"POST:api/login/{username}");
+
             var webSession = _authService.CreateSession(
                 username);
 
@@ -56,6 +58,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/login/users")]
         public ActionResult<List<UserInterfaceObjects.User>> AvailableUsers()
         {
+            _logger.Info("GET:api/login/users");
+
             var users = _userService.GetUsers();
 
             return Ok(users.ToUserInterfaceObjects());

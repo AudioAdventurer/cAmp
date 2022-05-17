@@ -32,6 +32,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/playlists")]
         public ActionResult<List<UserInterfaceObjects.PlayList>> GetPlayLists()
         {
+            _logger.Info($"GET:api/playlists");
+
             var userId = User.GetUserId();
 
             var playLists = _playListService
@@ -45,6 +47,7 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/playlists")]
         public ActionResult SavePlayList([FromBody] UserInterfaceObjects.PlayList playList)
         {
+            _logger.Info($"POST:api/playlists");
             var userId = User.GetUserId();
 
             _playListService
@@ -57,6 +60,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/playlists/{playListId:Guid}")]
         public ActionResult<UserInterfaceObjects.PlayList> GetPlayList([FromRoute] Guid playListId)
         {
+            _logger.Info($"GET:api/playlists/{playListId}");
+
             var userId = User.GetUserId();
 
             var playList = _playListService
@@ -70,6 +75,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/playlists/{playListId:Guid}")]
         public ActionResult DeletePlayList([FromRoute] Guid playListId)
         {
+            _logger.Info($"DELETE:api/playlists/{playListId}");
+
             var userId = User.GetUserId();
 
             _playListService
@@ -85,6 +92,8 @@ namespace cAmp.Libraries.Common.Controllers
             [FromRoute] Guid playListId, 
             [FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/playlists/{playListId}/soundfile/{soundFileId}/add");
+
             var userId = User.GetUserId();
             _playListService.AddSoundFileToPlayList(userId, playListId, soundFileId);
 
@@ -97,6 +106,8 @@ namespace cAmp.Libraries.Common.Controllers
             [FromRoute] Guid playListId,
             [FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/playlists/{playListId}/soundfile/{soundFileId}/remove");
+
             var userId = User.GetUserId();
             _playListService.RemoveSoundFileFromPlayList(userId, playListId, soundFileId);
 
@@ -108,6 +119,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles(
             [FromRoute] Guid playListId)
         {
+            _logger.Info($"GET:api/playlists/{playListId}/soundfiles");
+
             var userId = User.GetUserId();
 
             var soundFiles = _playListService

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
-using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +27,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/artists")]
         public ActionResult<UserInterfaceObjects.Artist> GetArtists()
         {
+            _logger.Info("GET:api/artists");
+
             var artist = _libraryService
                 .GetArtists()
                 .ToUserInterfaceObjects();
@@ -40,6 +41,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<UserInterfaceObjects.Artist> GetAlbums(
             [FromRoute] Guid artistId)
         {
+            _logger.Info($"GET:api/artists/{artistId}/albums");
+
             var albums = _libraryService
                 .GetAlbumsByArtist(artistId)
                 .ToUserInterfaceObjects();
@@ -52,6 +55,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<UserInterfaceObjects.Artist> GetArtist(
             [FromRoute] Guid artistId)
         {
+            _logger.Info($"GET:api/artists/{artistId}");
+
             var artist = _libraryService
                 .GetArtist(artistId)
                 .ToUserInterfaceObject();
@@ -64,6 +69,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles(
             [FromRoute] Guid artistId)
         {
+            _logger.Info($"GET:api/artists/{artistId}/soundfiles");
+
             var soundFiles = _libraryService
                 .GetSoundFilesByArtist(artistId)
                 .ToUserInterfaceObjects();

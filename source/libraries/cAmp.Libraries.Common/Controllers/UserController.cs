@@ -27,6 +27,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/users")]
         public ActionResult<List<UserInterfaceObjects.User>> GetUsers()
         {
+            _logger.Info("GET:api/users");
+
             var users = _userService.GetUsers();
             return Ok(users);
         }
@@ -36,6 +38,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<UserInterfaceObjects.User> GetUser(
             [FromRoute] Guid userId)
         {
+            _logger.Info($"GET:api/users/{userId}");
+
             var user = _userService.GetUser(userId);
             return Ok(user);
         }
@@ -44,6 +48,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/users")]
         public ActionResult SaveUser([FromBody] UserInterfaceObjects.User user)
         {
+            _logger.Info("POST:api/users");
+
             _userService.SaveUser(
                 user.Id, 
                 user.FirstName, 
@@ -59,6 +65,8 @@ namespace cAmp.Libraries.Common.Controllers
             [FromRoute] Guid userId,
             [FromBody] SetPasswordRequest setPassword)
         {
+            _logger.Info($"POST:api/users/{userId}/password");
+
             _userService.SetPassword(
                 userId, 
                 setPassword.NewPassword);
@@ -68,13 +76,15 @@ namespace cAmp.Libraries.Common.Controllers
 
         [HttpPost]
         [Route("api/users/{userId:Guid}/volume/{volume:int}")]
-        public ActionResult SetPassword(
+        public ActionResult SetVolume(
             [FromRoute] Guid userId,
             [FromRoute] int volume)
         {
-            _userService.SetPassword(
+            _logger.Info($"POST:api/users/{userId}/volume/{volume}");
+
+            _userService.SetVolume(
                 userId,
-                setPassword.NewPassword);
+                volume);
 
             return Ok();
         }

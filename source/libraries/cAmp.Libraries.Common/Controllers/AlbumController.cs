@@ -27,6 +27,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/albums")]
         public ActionResult<UserInterfaceObjects.Album> GetAlbums()
         {
+            _logger.Info("GET:api/albums");
+
             var albums = _libraryService
                 .GetAlbums()
                 .ToUserInterfaceObjects();
@@ -38,6 +40,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/albums/{albumId:Guid}")]
         public ActionResult<UserInterfaceObjects.Album> GetAlbum(Guid albumId)
         {
+            _logger.Info($"GET:api/albums/{albumId}");
+
             var album = _libraryService
                 .GetAlbum(albumId)
                 .ToUserInterfaceObject();
@@ -50,6 +54,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles(
             [FromRoute] Guid albumId)
         {
+            _logger.Info($"GET:api/albums/{albumId}/soundfiles");
+
             var soundFiles = _libraryService
                 .GetSoundFilesByAlbum(albumId)
                 .ToUserInterfaceObjects();

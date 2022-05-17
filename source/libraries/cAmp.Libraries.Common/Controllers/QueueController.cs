@@ -31,6 +31,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/song/{soundFileId:Guid}")]
         public ActionResult AddSongToQueue([FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/queue/song/{soundFileId}");
+
             Guid userId = User.GetUserId();
 
             _library.AddSongToQueue(userId, soundFileId);
@@ -42,6 +44,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/album/{albumId:Guid}")]
         public ActionResult AddAlbumToQueue([FromRoute] Guid albumId)
         {
+            _logger.Info($"POST:api/queue/album/{albumId}");
+
             Guid userId = User.GetUserId();
 
             _library.AddAlbumToQueue(userId, albumId);
@@ -53,6 +57,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/artist/{artistId:Guid}")]
         public ActionResult AddArtistToQueue([FromRoute] Guid artistId)
         {
+            _logger.Info($"POST:api/queue/artist/{artistId}");
+
             Guid userId = User.GetUserId();
 
             _library.AddArtistToQueue(userId, artistId);
@@ -64,6 +70,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue")]
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetQueue()
         {
+            _logger.Info($"GET:api/queue");
+
             Guid userId = User.GetUserId();
 
             var soundFiles = _library.GetQueueSoundFiles(userId)
@@ -78,6 +86,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/next")]
         public ActionResult<UserInterfaceObjects.SoundFile> GetNextSoundFile()
         {
+            _logger.Info($"GET:api/queue/next");
+
             Guid userId = User.GetUserId();
 
             var soundFile = _library.GetQueueNextSoundFile(userId)?
@@ -96,6 +106,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/current")]
         public ActionResult<UserInterfaceObjects.SoundFile> GetCurrentSoundFile()
         {
+            _logger.Info("GET:api/queue/current");
+
             Guid userId = User.GetUserId();
 
             var soundFile = _library
@@ -114,6 +126,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/advance")]
         public ActionResult<UserInterfaceObjects.SoundFile> AdvanceToNextSoundFile()
         {
+            _logger.Info("GET:api/queue/advance");
+
             Guid userId = User.GetUserId();
 
             var soundFile = _library
@@ -132,6 +146,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/size")]
         public ActionResult<int> GetQueueSize()
         {
+            _logger.Info("GET:api/queue/size");
+
             Guid userId = User.GetUserId();
 
             var size = _library.GetQueueSize(userId);
@@ -143,6 +159,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/clear")]
         public ActionResult ClearQueue()
         {
+            _logger.Info("POST:api/queue/clear");
+
             Guid userId = User.GetUserId();
 
             _library.ClearQueue(userId);
@@ -154,6 +172,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/queue/shuffle")]
         public ActionResult ShuffleQueue()
         {
+            _logger.Info("POST:api/queue/shuffle");
+
             Guid userId = User.GetUserId();
 
             _library.ShuffleQueue(userId);
