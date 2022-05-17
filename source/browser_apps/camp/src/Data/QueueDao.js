@@ -36,5 +36,9 @@ export default class QueueDao extends BaseDao {
   clearQueue() {
     return this.write(`/queue/clear`);
   }
+
+  shuffleQueue() {
+    return this.write(`/queue/shuffle`);
+  }
 }
 

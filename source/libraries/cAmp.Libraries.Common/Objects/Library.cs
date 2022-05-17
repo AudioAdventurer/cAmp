@@ -188,7 +188,7 @@ namespace cAmp.Libraries.Common.Objects
         public void ShuffleQueue(Guid userId)
         {
             var queue = GetQueueByUser(userId);
-            
+            queue.Shuffle();
         }
 
         public List<SoundFile> GetQueueSoundFiles(Guid userId)

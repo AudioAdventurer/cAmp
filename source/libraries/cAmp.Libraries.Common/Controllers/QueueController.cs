@@ -156,7 +156,7 @@ namespace cAmp.Libraries.Common.Controllers
         {
             Guid userId = User.GetUserId();
 
-            _library.ClearQueue(userId);
+            _library.ShuffleQueue(userId);
 
             return Ok();
         }

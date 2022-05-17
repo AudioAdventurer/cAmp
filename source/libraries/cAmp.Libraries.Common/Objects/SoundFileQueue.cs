@@ -55,11 +55,19 @@ namespace cAmp.Libraries.Common.Objects
             }
         }
 
-        public void ShuffleRemaining()
+        /// <summary>
+        /// This shuffles the current queue.  If a song is playing it may be repeated
+        /// </summary>
+        public void Shuffle()
         {
             lock (_lock)
             {
                 var songs = _queue.ToList();
+
+                // if (_currentSoundFile != null)
+                // {
+                //     songs.Add(_currentSoundFile);
+                // }
 
                 _queue.Clear();
 
@@ -135,6 +143,11 @@ namespace cAmp.Libraries.Common.Objects
             }
         }
 
+        /// <summary>
+        /// Shuffle files as they are added to the queue.  This does
+        /// not shuffle files already in the queue
+        /// </summary>
+        /// <param name="soundFiles"></param>
         public void ShuffleEnqueue(List<SoundFile> soundFiles)
         {
             lock (_lock)

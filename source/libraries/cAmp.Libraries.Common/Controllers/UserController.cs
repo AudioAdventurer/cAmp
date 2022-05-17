@@ -65,5 +65,18 @@ namespace cAmp.Libraries.Common.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("api/users/{userId:Guid}/volume/{volume:int}")]
+        public ActionResult SetPassword(
+            [FromRoute] Guid userId,
+            [FromRoute] int volume)
+        {
+            _userService.SetPassword(
+                userId,
+                setPassword.NewPassword);
+
+            return Ok();
+        }
     }
 }

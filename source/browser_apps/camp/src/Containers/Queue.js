@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import {toast} from "react-toastify";
 import Refresh from "../Components/Refresh";
 import Clear from "../Components/Clear";
+import Shuffle from "../Components/Shuffle";
 
 export default class Queue extends Component {
   constructor(props) {
@@ -16,8 +17,11 @@ export default class Queue extends Component {
     };
 
     this.loadSoundFiles = this.loadSoundFiles.bind(this);
+    this.shuffle = this.shuffle.bind(this);
+
     this.handleRefresh = this.handleRefresh.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
   }
 
   componentDidMount() {
@@ -45,8 +49,21 @@ export default class Queue extends Component {
       });
   }
 
+  shuffle() {
+    cAmpService.shuffleQueue()
+      .then(r=> {
+        this.loadSoundFiles();
+      }).catch(e => {
+      toast.error(e.message);
+    });
+  }
+
   handleRefresh() {
     this.loadSoundFiles();
+  }
+
+  handleShuffle() {
+    this.shuffle();
   }
 
   handleClear() {
@@ -108,7 +125,12 @@ export default class Queue extends Component {
             </h3>
           </Col>
           <Col>
-            <div style={{width:'80px', float:'right'}}>
+            <div style={{width:'120px', float:'right'}}>
+              <div style={{width:'40px', float:'left'}}>
+                <Shuffle
+                  onShuffle={this.handleShuffle}
+                />
+              </div>
               <div style={{width:'40px', float:'left'}}>
                 <Refresh
                   onRefresh={this.handleRefresh}

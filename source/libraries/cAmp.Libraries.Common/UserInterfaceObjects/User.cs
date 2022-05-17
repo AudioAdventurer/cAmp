@@ -12,5 +12,7 @@ namespace cAmp.Libraries.Common.UserInterfaceObjects
         public string LastName { get; set; }
 
         public string Username { get; set; }
+
+        public int Volume { get; set; }
     }
 }

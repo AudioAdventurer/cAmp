@@ -14,6 +14,8 @@ namespace cAmp.Libraries.Common.Records
 
         public string Salt { get; init; }
 
+        public int Volume { get; set; }
+
         public override IcAmpObject ToUserInterfaceObject()
         {
             return new UserInterfaceObjects.User()
@@ -21,7 +23,8 @@ namespace cAmp.Libraries.Common.Records
                 Id = Id,
                 FirstName = FirstName,
                 LastName = LastName,
-                Username = Username
+                Username = Username,
+                Volume = Volume
             };
         }
     }

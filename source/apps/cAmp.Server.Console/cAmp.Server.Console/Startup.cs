@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -103,7 +104,9 @@ namespace cAmp.Server.Console
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")),
-                RequestPath = ""
+                RequestPath = "",
+                ContentTypeProvider = new FileExtensionContentTypeProvider(),
+                DefaultContentType = "application/javascript"
             };
 
             app.UseStaticFiles(staticFileOptions);
@@ -125,6 +128,11 @@ namespace cAmp.Server.Console
             });
 
             //app.UseMvc();
+            app.Run(async (context) =>
+            {
+                context.Response.ContentType = "text/html";
+                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
+            });
         }
     }
 }

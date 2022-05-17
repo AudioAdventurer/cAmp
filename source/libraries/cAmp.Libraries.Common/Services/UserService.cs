@@ -68,6 +68,16 @@ namespace cAmp.Libraries.Common.Services
             _userRepo.Save(user);
         }
 
+        public void SetVolume(
+            Guid userId,
+            int volume)
+        {
+            var user = GetUser(userId);
+            user.Volume = volume;
+
+            _userRepo.Save(user);
+        }
+
         public void SaveUser(
             Guid userId,
             string firstName,

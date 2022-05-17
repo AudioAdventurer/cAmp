@@ -93,6 +93,11 @@ export default class cAmpService {
     return dao.listQueue();
   }
 
+  static shuffleQueue() {
+    const dao = new QueueDao(Environment.BASE_URL);
+    return dao.shuffleQueue();
+  }
+
   static getNextQueueSong() {
     const dao = new QueueDao(Environment.BASE_URL);
     return dao.getNextSong();
