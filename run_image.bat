@@ -5,7 +5,7 @@ REM Remove existing
 docker rm cAmp
 
 REM Pull the latest image
-docker pull audioadventurer/camp:latest
+docker pull ghcr.io/audioadventurer/camp:main
 
 REM Run the new image
 REM Adjust your media locations as needed (c:\Media\Data, c:\Media\Music)
@@ -18,4 +18,4 @@ docker run -d  ^
 		   -v c:\Media\Music:/Media/Music ^
 		   --restart unless-stopped ^
 		   --name=cAmp ^
-		   "audioadventurer/camp"
+		   "ghcr.io/audioadventurer/camp:main"
