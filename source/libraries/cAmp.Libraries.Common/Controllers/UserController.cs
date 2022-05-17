@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Services;
 using cAmp.Libraries.Common.UserInterfaceObjects;
@@ -75,12 +76,13 @@ namespace cAmp.Libraries.Common.Controllers
         }
 
         [HttpPost]
-        [Route("api/users/{userId:Guid}/volume/{volume:int}")]
+        [Route("api/user/volume/{volume:int}")]
         public ActionResult SetVolume(
-            [FromRoute] Guid userId,
             [FromRoute] int volume)
         {
-            _logger.Info($"POST:api/users/{userId}/volume/{volume}");
+            var userId = User.GetUserId();
+
+            _logger.Info($"POST:api/user/volume/{volume}");
 
             _userService.SetVolume(
                 userId,

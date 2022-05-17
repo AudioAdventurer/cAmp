@@ -10,6 +10,7 @@ import PlayListDao from "../Data/PlayListDao";
 
 export default class cAmpService {
   static JWT = "";
+  static Volume = 100;
   static UserProperties = null;
   static UserAccess = {};
 
@@ -80,6 +81,13 @@ export default class cAmpService {
   static saveUser(user) {
     const dao = new UserDao(Environment.BASE_URL);
     return dao.saveUser(user);
+  }
+
+  static saveVolume(volume) {
+    this.setVolume(volume);
+
+    const dao = new UserDao(Environment.BASE_URL);
+    return dao.saveVolume(volume);
   }
 
   //Queue
@@ -206,6 +214,14 @@ export default class cAmpService {
   static setJwt(jwt) {
     this.JWT = jwt;
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.JWT;
+  }
+
+  static setVolume(volume) {
+    this.Volume = volume;
+  }
+
+  static getVolume() {
+    return this.Volume;
   }
 
 }

@@ -37,7 +37,8 @@ namespace cAmp.Libraries.Common.Controllers
             _logger.Info($"POST:api/login/{username}");
 
             var webSession = _authService.CreateSession(
-                username);
+                username,
+                out Records.User user);
 
             if (webSession != null)
             {
@@ -45,7 +46,8 @@ namespace cAmp.Libraries.Common.Controllers
 
                 var response = new LoginResponse
                 {
-                    JWT = jwt
+                    JWT = jwt,
+                    Volume = user.Volume
                 };
 
                 return Ok(response);
