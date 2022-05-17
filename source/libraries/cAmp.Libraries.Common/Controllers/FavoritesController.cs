@@ -32,6 +32,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult AddToFavoritest(
             [FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/favorites/soundfile/{soundFileId}/add");
+
             var userId = User.GetUserId();
             _playListService.AddSoundFileToFavorites(userId, soundFileId);
 
@@ -43,6 +45,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult ToggleFavorite(
             [FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/favorites/soundfile/{soundFileId}/toggle");
+
             var userId = User.GetUserId();
             _playListService.ToggleFavorite(userId, soundFileId);
 
@@ -54,6 +58,8 @@ namespace cAmp.Libraries.Common.Controllers
         public ActionResult RemoveFromFavorites(
             [FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/favorites/soundfile/{soundFileId}/remove");
+
             var userId = User.GetUserId();
             _playListService.RemoveSoundFileFromFavorites(userId, soundFileId);
 
@@ -62,9 +68,10 @@ namespace cAmp.Libraries.Common.Controllers
 
         [HttpGet]
         [Route("api/favorites/soundfiles")]
-        public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles(
-            [FromRoute] Guid playListId)
+        public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles()
         {
+            _logger.Info("GET:api/favorites/soundfiles");
+
             var userId = User.GetUserId();
 
             var soundFiles = _playListService

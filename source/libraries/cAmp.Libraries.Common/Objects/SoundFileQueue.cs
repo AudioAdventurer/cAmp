@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using cAmp.Libraries.Common.Records;
 
 namespace cAmp.Libraries.Common.Objects
@@ -54,6 +55,32 @@ namespace cAmp.Libraries.Common.Objects
             }
         }
 
+        /// <summary>
+        /// This shuffles the current queue.  If a song is playing it may be repeated
+        /// </summary>
+        public void Shuffle()
+        {
+            lock (_lock)
+            {
+                var songs = _queue.ToList();
+
+                // if (_currentSoundFile != null)
+                // {
+                //     songs.Add(_currentSoundFile);
+                // }
+
+                _queue.Clear();
+
+                while (songs.Count > 0)
+                {
+                    int selected = RandomNumberGenerator.GetInt32(0, songs.Count);
+
+                    _queue.Enqueue(songs[selected]);
+                    songs.RemoveAt(selected);
+                }
+            }
+        }
+
         public SoundFile NextSoundFile()
         {
             lock (_lock)
@@ -91,7 +118,6 @@ namespace cAmp.Libraries.Common.Objects
 
                 return _currentSoundFile;
             }
-
         }
 
         public void Enqueue(SoundFile soundFile)
@@ -111,6 +137,27 @@ namespace cAmp.Libraries.Common.Objects
                 foreach (var soundFile in soundFiles)
                 {
                     _queue.Enqueue(soundFile);
+                }
+
+                EnsureCurrentSoundFileSet();
+            }
+        }
+
+        /// <summary>
+        /// Shuffle files as they are added to the queue.  This does
+        /// not shuffle files already in the queue
+        /// </summary>
+        /// <param name="soundFiles"></param>
+        public void ShuffleEnqueue(List<SoundFile> soundFiles)
+        {
+            lock (_lock)
+            {
+                while (soundFiles.Count > 0)
+                {
+                    int selected = RandomNumberGenerator.GetInt32(0, soundFiles.Count);
+
+                    _queue.Enqueue(soundFiles[selected]);
+                    soundFiles.RemoveAt(selected);
                 }
 
                 EnsureCurrentSoundFileSet();

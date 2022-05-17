@@ -35,13 +35,7 @@ namespace cAmp.Libraries.Common.Helpers
 
         public static string GenerateSalt()
         {
-            var salt = new byte[SALT_BYTES];
-
-            using (var random = new RNGCryptoServiceProvider())
-            {
-                random.GetBytes(salt);
-            }
-
+            var salt = RandomNumberGenerator.GetBytes(SALT_BYTES);
             return Convert.ToBase64String(salt);
         }
     }

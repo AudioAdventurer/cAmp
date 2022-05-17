@@ -18,9 +18,10 @@ namespace cAmp.Libraries.Common.Services
         }
 
         public IWebSession CreateSession(
-            string username)
+            string username,
+            out Records.User user)
         {
-            var user = _userService.GetUserByUsername(username);
+            user = _userService.GetUserByUsername(username);
 
             if (user != null)
             {

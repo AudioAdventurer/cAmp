@@ -14,6 +14,8 @@ export default class QueuePlayer extends Component {
   constructor(props) {
     super(props);
 
+    let volume = cAmpService.getVolume();
+
     this.state = {
       username: "",
       playing: false,
@@ -25,7 +27,7 @@ export default class QueuePlayer extends Component {
       nextSoundFileName: null,
       blob: null,
       howl: null,
-      volume: 100
+      volume: volume
     };
 
     this.handleShouldStop = this.handleShouldStop.bind(this);
@@ -69,13 +71,19 @@ export default class QueuePlayer extends Component {
   }
 
   handleVolumeChanged(value) {
-    this.setState({
-      volume: value
-    }, ()=>{
-      if (this.state.howl !== null) {
-        this.state.howl.volume(value / 100.0)
-      }
-    });
+    cAmpService.saveVolume(value)
+      .then(r => {
+        this.setState({
+          volume: value
+        }, ()=>{
+          if (this.state.howl !== null) {
+            this.state.howl.volume(value / 100.0)
+          }
+        });
+      })
+      .catch(e => {
+        toast.error("Error saving volume");
+      });
   }
 
   refresh() {

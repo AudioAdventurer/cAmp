@@ -31,6 +31,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/soundfiles/{soundFileId:Guid}")]
         public ActionResult GetSoundFile([FromRoute] Guid soundFileId)
         {
+            _logger.Info($"GET:api/soundfiles/{soundFileId}");
+
             using (var stream = _fileService.GetFile(soundFileId))
             {
                 byte[] data = null;
@@ -54,6 +56,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/soundfiles")]
         public ActionResult<List<UserInterfaceObjects.SoundFile>> GetSoundFiles()
         {
+            _logger.Info("GET:api/soundfiles");
+
             var soundFiles = _libraryService
                 .GetSoundFiles()
                 .ToUserInterfaceObjects();
@@ -67,6 +71,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/soundfiles/{soundFileId:Guid}/completed")]
         public ActionResult FinishedSoundFile([FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/soundfiles/{soundFileId}/completed");
+
             var userId = User.GetUserId();
 
             _libraryService.FinishedSoundFile(userId, soundFileId, true);
@@ -77,6 +83,8 @@ namespace cAmp.Libraries.Common.Controllers
         [Route("api/soundfiles/{soundFileId:Guid}/skipped")]
         public ActionResult Skipped([FromRoute] Guid soundFileId)
         {
+            _logger.Info($"POST:api/soundfiles/{soundFileId}/skipped");
+
             var userId = User.GetUserId();
 
             _libraryService.FinishedSoundFile(userId, soundFileId, false);

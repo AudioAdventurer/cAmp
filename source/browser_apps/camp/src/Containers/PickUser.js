@@ -37,7 +37,10 @@ export default class PickUser extends Component {
     cAmpService.login(username)
       .then(r => {
         let jwt = r.jwt;
+        let volume = r.volume;
+
         cAmpService.setJwt(jwt);
+        cAmpService.setVolume(volume);
 
         this.props.userHasAuthenticated(true);
       })
