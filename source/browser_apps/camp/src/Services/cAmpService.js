@@ -223,5 +223,4 @@ export default class cAmpService {
   static getVolume() {
     return this.Volume;
   }
-
 }

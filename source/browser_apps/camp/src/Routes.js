@@ -14,8 +14,6 @@ import SoundFiles from "./Containers/SoundFiles";
 import Users from "./Containers/Users";
 import User from "./Containers/User";
 
-
-
 export default ({childProps}) =>
   <Switch>
     <AppliedRoute path="/" exact component={Home} props={childProps}/>

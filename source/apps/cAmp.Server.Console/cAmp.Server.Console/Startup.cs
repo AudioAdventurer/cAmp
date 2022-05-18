@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Autofac;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Modules;
@@ -108,8 +109,8 @@ namespace cAmp.Server.Console
                 ContentTypeProvider = new FileExtensionContentTypeProvider(),
                 DefaultContentType = "application/javascript"
             };
-
             app.UseStaticFiles(staticFileOptions);
+
             app.UseRouting();
 
             app.UseCors(x =>
@@ -125,9 +126,11 @@ namespace cAmp.Server.Console
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToFile("index.html");
             });
 
             //app.UseMvc();
+
             app.Run(async (context) =>
             {
                 context.Response.ContentType = "text/html";
