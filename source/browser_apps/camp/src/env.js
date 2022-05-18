@@ -6,7 +6,6 @@ class Environment {
     Environment.BASE_URL = getUrl.protocol + "//" + getUrl.host.split(":")[0] + ":8000/api";
   }
 
-
   static BASE_URL = "";
 }
 

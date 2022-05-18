@@ -17,6 +17,4 @@ export default class UserDao extends BaseDao {
   saveVolume(volume) {
     return this.write(`/user/volume/${volume}`);
   }
-
-
 }

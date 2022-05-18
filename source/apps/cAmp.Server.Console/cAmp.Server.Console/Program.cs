@@ -36,7 +36,6 @@ namespace cAmp.Server.Console
 
                     services.AddAutofac(c =>
                     {
-
                     });
 
                     services.AddAuthentication(x =>
