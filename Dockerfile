@@ -1,5 +1,5 @@
 # Build react app
-FROM node:10-alpine AS react-build
+FROM node:18.9-alpine AS react-build
 RUN mkdir /app
 WORKDIR /app
 COPY ./source/browser_apps/camp/package.json /app
