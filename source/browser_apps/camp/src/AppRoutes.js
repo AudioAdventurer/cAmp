@@ -2,15 +2,15 @@ import React, {Suspense, lazy} from "react";
 import {Navigate, Route, Routes, useParams} from "react-router-dom";
 import Environment from "./env";
 
-const Artists = lazy(() => import("./containers/Artists"));
-const Albums = lazy(()=> import("./containers/Albums"));
-const Home = lazy(() => import("./containers/Home"));
-const SoundFiles = lazy(()=> import("./containers/SoundFiles"));
-const PickUser = lazy(()=>import("./containers/PickUser"));
-const PlayLists = lazy(()=> import("./containers/PlayLists"));
-const Queue = lazy(()=> import("./containers/Queue"));
-const Users = lazy(()=> import("./containers/Users"));
-const User = lazy(()=> import("./containers/User"));
+const Artists = lazy(() => import('./Containers/Artists'));
+const Albums = lazy(()=> import('./Containers/Albums'));
+const Home = lazy(() => import('./Containers/Home'));
+const SoundFiles = lazy(()=> import('./Containers/SoundFiles'));
+const PickUser = lazy(()=>import('./Containers/PickUser'));
+const PlayLists = lazy(()=> import('./Containers/PlayLists'));
+const Queue = lazy(()=> import('./Containers/Queue'));
+const Users = lazy(()=> import("./Containers/Users"));
+const User = lazy(()=> import('./Containers/User'));
 
 const AppRoutes = ({childProps}) => (
   <Suspense fallback={<div>Loading ...</div>}>
