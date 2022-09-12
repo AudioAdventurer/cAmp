@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Routes from "./Routes";
+import Routes from "./AppRoutes";
 import { LinkContainer } from "react-router-bootstrap";
 import cAmpService from "./Services/cAmpService";
 import {Nav, Navbar} from "react-bootstrap";

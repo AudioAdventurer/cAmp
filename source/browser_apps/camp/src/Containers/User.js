@@ -1,7 +1,7 @@
 import "./User.css";
 import React, {Component} from "react";
 import {Row, Col, Form, Button} from "react-bootstrap";
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { v4 as uuidv4} from 'uuid';
 import {toast} from "react-toastify";
 import cAmpService from "../Services/cAmpService";
@@ -10,7 +10,7 @@ export default class User extends Component {
   constructor(props) {
     super(props);
 
-    let userId = this.props.match.params.userId;
+    let userId = this.props.params.userId;
 
     this.state = {
       redirect: false,
@@ -52,7 +52,7 @@ export default class User extends Component {
 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to={`/users`} />
+      return <Navigate to={`/users`} />
     }
   };
 

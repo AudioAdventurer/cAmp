@@ -1,7 +1,7 @@
 import "./Home.css";
 import React, {Component} from "react";
 import {Row, Col} from "react-bootstrap";
-import {Redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 export default class Home extends Component {
   constructor(props) {
@@ -47,7 +47,7 @@ export default class Home extends Component {
 
   render() {
     if (this.state.redirectToSetup) {
-      return (<Redirect to='/setup'/>)
+      return (<Navigate to='/setup'/>)
     } else {
       return (
         <div className="Home">

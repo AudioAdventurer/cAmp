@@ -10,12 +10,12 @@ export default class Albums extends Component {
   constructor(props) {
     super(props);
 
-    let albumId = this.props.match.params.albumId;
+    let albumId = this.props.params.albumId;
     if (albumId === undefined) {
       albumId = null;
     }
 
-    let artistId = this.props.match.params.artistId;
+    let artistId = this.props.params.artistId;
     if (artistId === undefined) {
       artistId = null;
     }

@@ -10,7 +10,7 @@ export default class Artists extends Component {
   constructor(props) {
     super(props);
 
-    let artistId = this.props.match.params.artistId;
+    let artistId = this.props.params.artistId;
     if (artistId === undefined) {
       artistId = null;
     }
