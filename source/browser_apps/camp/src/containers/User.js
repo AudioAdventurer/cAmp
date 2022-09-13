@@ -4,7 +4,7 @@ import {Row, Col, Form, Button} from "react-bootstrap";
 import { Link, Navigate } from 'react-router-dom'
 import { v4 as uuidv4} from 'uuid';
 import {toast} from "react-toastify";
-import cAmpService from "../Services/cAmpService";
+import cAmpService from "../services/cAmpService";
 
 export default class User extends Component {
   constructor(props) {

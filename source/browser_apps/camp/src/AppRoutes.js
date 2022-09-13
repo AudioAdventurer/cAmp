@@ -1,16 +1,26 @@
-import React, {Suspense, lazy} from "react";
+import React, {Suspense} from "react";
 import {Navigate, Route, Routes, useParams} from "react-router-dom";
 import Environment from "./env";
 
-const Artists = lazy(() => import('./Containers/Artists'));
-const Albums = lazy(()=> import('./Containers/Albums'));
-const Home = lazy(() => import('./Containers/Home'));
-const SoundFiles = lazy(()=> import('./Containers/SoundFiles'));
-const PickUser = lazy(()=>import('./Containers/PickUser'));
-const PlayLists = lazy(()=> import('./Containers/PlayLists'));
-const Queue = lazy(()=> import('./Containers/Queue'));
-const Users = lazy(()=> import("./Containers/Users"));
-const User = lazy(()=> import('./Containers/User'));
+// const Artists = lazy(() => import('./containers/Artists'));
+// const Albums = lazy(()=> import('./containers/Albums'));
+// const Home = lazy(() => import('./containers/Home'));
+// const SoundFiles = lazy(()=> import('./containers/SoundFiles'));
+// const PickUser = lazy(()=>import('./containers/PickUser'));
+// const PlayLists = lazy(()=> import('./containers/PlayLists'));
+// const Queue = lazy(()=> import('./containers/Queue'));
+// const Users = lazy(()=> import("./containers/Users"));
+// const User = lazy(()=> import('./containers/User'));
+
+import Home from "./containers/Home";
+import Artists from "./containers/Artists";
+import Albums from "./containers/Albums";
+import PickUser from "./containers/PickUser";
+import PlayLists from "./containers/PlayLists"
+import Queue from "./containers/Queue";
+import SoundFiles from "./containers/SoundFiles";
+import Users from "./containers/Users";
+import User from "./containers/User";
 
 const AppRoutes = ({childProps}) => (
   <Suspense fallback={<div>Loading ...</div>}>
@@ -64,6 +74,24 @@ const AppRoutes = ({childProps}) => (
                  element={
                    <RequireAuthentication
                      child={<WithParams Component={Albums} childProps={childProps}/>}
+                     childProps={childProps}
+                   />
+                 }
+          />
+          <Route path="/albums/:albumId"
+                 exact
+                 element={
+                   <RequireAuthentication
+                     child={<WithParams Component={Albums} childProps={childProps}/>}
+                     childProps={childProps}
+                   />
+                 }
+          />
+          <Route path="/albums/:albumId/songs"
+                 exact
+                 element={
+                   <RequireAuthentication
+                     child={<WithParams Component={SoundFiles} childProps={childProps}/>}
                      childProps={childProps}
                    />
                  }

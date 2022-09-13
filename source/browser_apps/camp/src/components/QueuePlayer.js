@@ -1,7 +1,7 @@
 import "./QueuePlayer.css";
 import React, { Component } from "react";
 import {Row, Col} from "react-bootstrap";
-import cAmpService from "../Services/cAmpService";
+import cAmpService from "../services/cAmpService";
 import {toast} from "react-toastify";
 import Play from "./Play";
 import Next from "./Next";
