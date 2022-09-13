@@ -14,17 +14,17 @@ export default class SoundFiles extends Component {
   constructor(props) {
     super(props);
 
-    let albumId = this.props.match.params.albumId;
+    let albumId = this.props.params.albumId;
     if (albumId === undefined) {
       albumId = null;
     }
 
-    let artistId = this.props.match.params.artistId;
+    let artistId = this.props.params.artistId;
     if (artistId === undefined) {
       artistId = null;
     }
 
-    let playListId = this.props.match.params.playListId;
+    let playListId = this.props.params.playListId;
     if (playListId === undefined) {
       playListId = null;
     }
@@ -65,17 +65,17 @@ export default class SoundFiles extends Component {
       }
     }
 
-    let albumId = this.props.match.params.albumId;
+    let albumId = this.props.params.albumId;
     if (albumId === undefined) {
       albumId = null;
     }
 
-    let artistId = this.props.match.params.artistId;
+    let artistId = this.props.params.artistId;
     if (artistId === undefined) {
       artistId = null;
     }
 
-    let playListId = this.props.match.params.playListId;
+    let playListId = this.props.params.playListId;
     if (playListId === undefined) {
       playListId = null;
     }
