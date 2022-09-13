@@ -1,12 +1,12 @@
 import Environment from "../env.js";
-import AlbumDao from "../Data/AlbumDao";
-import ArtistDao from "../Data/ArtistDao";
-import SoundFileDao from "../Data/SoundFileDao";
-import AuthDao from "../Data/AuthDao";
+import AlbumDao from "../data/AlbumDao";
+import ArtistDao from "../data/ArtistDao";
+import SoundFileDao from "../data/SoundFileDao";
+import AuthDao from "../data/AuthDao";
 import * as axios from "axios";
-import UserDao from "../Data/UserDao";
-import QueueDao from "../Data/QueueDao";
-import PlayListDao from "../Data/PlayListDao";
+import UserDao from "../data/UserDao";
+import QueueDao from "../data/QueueDao";
+import PlayListDao from "../data/PlayListDao";
 
 export default class cAmpService {
   static JWT = "";

@@ -1,6 +1,6 @@
 import "./Users.css";
 import React, {Component} from "react";
-import cAmpService from "../Services/cAmpService";
+import cAmpService from "../services/cAmpService";
 import {Row, Col, Table} from "react-bootstrap";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { Link } from 'react-router-dom'

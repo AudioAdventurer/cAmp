@@ -1,9 +1,9 @@
 import "./Artists.css";
 import React, {Component} from "react";
-import cAmpService from "../Services/cAmpService";
+import cAmpService from "../services/cAmpService";
 import {Row, Col, Table} from "react-bootstrap";
 import {toast} from "react-toastify";
-import LoginButton from "../Components/LoginButton";
+import LoginButton from "../components/LoginButton";
 import {Navigate} from "react-router-dom";
 
 export default class PickUser extends Component {

@@ -3,11 +3,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Routes from "./AppRoutes";
 import { LinkContainer } from "react-router-bootstrap";
-import cAmpService from "./Services/cAmpService";
+import cAmpService from "./services/cAmpService";
 import {Nav, Navbar} from "react-bootstrap";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import QueuePlayer from "./Components/QueuePlayer";
+import QueuePlayer from "./components/QueuePlayer";
 
 export default class App extends Component {
   constructor(props) {

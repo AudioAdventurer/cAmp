@@ -1,12 +1,12 @@
 import "./Queue.css";
 import React, {Component} from "react";
-import cAmpService from "../Services/cAmpService";
+import cAmpService from "../services/cAmpService";
 import {Row, Col, Table} from "react-bootstrap";
 import { Link } from 'react-router-dom'
 import {toast} from "react-toastify";
-import Refresh from "../Components/Refresh";
-import Clear from "../Components/Clear";
-import Shuffle from "../Components/Shuffle";
+import Refresh from "../components/Refresh";
+import Clear from "../components/Clear";
+import Shuffle from "../components/Shuffle";
 
 export default class Queue extends Component {
   constructor(props) {
