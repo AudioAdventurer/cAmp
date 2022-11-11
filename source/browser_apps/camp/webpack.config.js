@@ -2,7 +2,10 @@ const path = require('path');
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+
+const publicSource = "public";
 
 module.exports = (_env, args) => {
   const prod = args.mode === "production";
@@ -11,10 +14,11 @@ module.exports = (_env, args) => {
     context: __dirname,
     devServer: {
       hot: true,
-      host: 'local-ipv4',
+      host: '192.168.50.44',
       port: 3000,
       open: true
     },
+    devtool: prod ? 'source-map' : 'inline-source-map',
     entry: ['./src/index.js'],
     mode: prod ? "production" : "development",
     module: {
@@ -47,7 +51,7 @@ module.exports = (_env, args) => {
       path: path.resolve(__dirname, 'dist'),
       filename: 'bundle.js',
       chunkFilename: '[id].js',
-      publicPath: ''
+      publicPath: '/'
     },
     resolve: {
       extensions: ['.js', '.jsx']
@@ -55,6 +59,30 @@ module.exports = (_env, args) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './src/index.html',
+      }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.join(publicSource, "lib"),
+            to: "lib"
+          },
+          {
+            from: path.join(publicSource, "manifest.json"),
+            to: "manifest.json"
+          },
+          {
+            from: path.join(publicSource, "robots.txt"),
+            to: "robots.txt"
+          },
+          {
+            from: path.join(publicSource, "apple-touch-icon.png"),
+            to: "apple-touch-icon.png"
+          },
+          {
+            from: path.join(publicSource, "favicon.ico"),
+            to: "favicon.ico"
+          }
+        ]
       }),
       ... (prod ? [] : [new ReactRefreshWebpackPlugin()])
     ]
