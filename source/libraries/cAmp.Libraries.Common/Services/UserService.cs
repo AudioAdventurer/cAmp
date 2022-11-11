@@ -112,7 +112,8 @@ namespace cAmp.Libraries.Common.Services
                 {
                     FirstName = "Admin", 
                     LastName = "User", 
-                    Username = "admin"
+                    Username = "admin",
+                    Volume = 85
                 };
 
                 _userRepo.Save(user);

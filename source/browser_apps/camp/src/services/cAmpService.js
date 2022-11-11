@@ -3,10 +3,10 @@ import AlbumDao from "../data/AlbumDao";
 import ArtistDao from "../data/ArtistDao";
 import SoundFileDao from "../data/SoundFileDao";
 import AuthDao from "../data/AuthDao";
-import * as axios from "axios";
 import UserDao from "../data/UserDao";
 import QueueDao from "../data/QueueDao";
 import PlayListDao from "../data/PlayListDao";
+import axios from 'axios';
 
 export default class cAmpService {
   static JWT = "";
@@ -193,8 +193,6 @@ export default class cAmpService {
     const dao = new PlayListDao(Environment.BASE_URL);
     return dao.getFavoritesSoundFiles();
   }
-
-
 
   //Authentication
   static login(username) {

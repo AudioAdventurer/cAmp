@@ -134,7 +134,7 @@ namespace cAmp.Libraries.Common.Services
 
             if (soundFile != null)
             {
-                var playList = _playListRepo.GetFavorites(userId);
+                var playList = _playListRepo.EnsureFavoritesPlayList(userId);
 
                 var playListSoundFile = _playListSoundFileRepo.GetByPlayListFileName(playList.Id, soundFile.Filename);
 
@@ -157,7 +157,7 @@ namespace cAmp.Libraries.Common.Services
 
             if (soundFile != null)
             {
-                var playList = _playListRepo.GetFavorites(userId);
+                var playList = _playListRepo.EnsureFavoritesPlayList(userId);
 
                 RemoveSoundFileFromPlayList(userId, playList.Id, soundFileId);
                 RemoveFavoriteFromCache(userId, soundFile);
@@ -170,7 +170,7 @@ namespace cAmp.Libraries.Common.Services
 
             if (soundFile != null)
             {
-                var playList = _playListRepo.GetFavorites(userId);
+                var playList = _playListRepo.EnsureFavoritesPlayList(userId);
 
                 AddSoundFileToPlayList(userId, playList.Id, soundFileId);
                 AddFavoriteToCache(userId, soundFile);
@@ -179,7 +179,7 @@ namespace cAmp.Libraries.Common.Services
 
         public List<SoundFile> GetFavoritesSoundFiles(Guid userId)
         {
-            var playList = _playListRepo.GetFavorites(userId);
+            var playList = _playListRepo.EnsureFavoritesPlayList(userId);
 
             return GetSoundFiles(userId, playList.Id);
         }
