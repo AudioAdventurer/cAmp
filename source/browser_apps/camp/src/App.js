@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Routes from "./AppRoutes";
 import { LinkContainer } from "react-router-bootstrap";
 import cAmpService from "./services/cAmpService";
-import {Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar} from "react-bootstrap";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import QueuePlayer from "./components/QueuePlayer";
@@ -96,7 +96,7 @@ export default class App extends Component {
     );
   }
 
-  renderLoggedInNavBar() {
+  renderLoggedInNavBarStart() {
     return(
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -136,27 +136,34 @@ export default class App extends Component {
             </LinkContainer>
           </Nav.Item>
         </Nav>
-        <Nav >
-          <Nav.Item>
-            <LinkContainer to="/users">
-              <Nav.Link>
-                Users
-              </Nav.Link>
-            </LinkContainer>
-          </Nav.Item>
-          <Nav.Item onClick={this.handleLogout}>
-            <Nav.Link>
-              Logout
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
       </Navbar.Collapse>
+    );
+  }
+
+  renderLoggedInNavBarEnd() {
+    return(
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav >
+            <Nav.Item>
+              <LinkContainer to="/users">
+                <Nav.Link>
+                  Users
+                </Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item onClick={this.handleLogout} className="justify-content-end" >
+              <Nav.Link>
+                Logout
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Navbar.Collapse>
     );
   }
 
   renderNotLoggedInNavBar() {
     return (
-      <Navbar.Collapse>
+      <Navbar.Collapse className="justify-content-end">
         <Nav className="mr-auto">
         </Nav>
         <Nav >
@@ -173,10 +180,13 @@ export default class App extends Component {
   renderNavbar() {
     return (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand>
-          <Link to="/">cAmp Audio Player</Link>
-        </Navbar.Brand>
-        {this.state.isAuthenticated ? this.renderLoggedInNavBar() : this.renderNotLoggedInNavBar() }
+        <Container>
+          <Navbar.Brand>
+            <Link to="/">cAmp Audio Player</Link>
+          </Navbar.Brand>
+          {this.state.isAuthenticated ? this.renderLoggedInNavBarStart() : this.renderNotLoggedInNavBar() }
+          {this.state.isAuthenticated ? this.renderLoggedInNavBarEnd() : ""}
+        </Container>
       </Navbar>
     );
   }
