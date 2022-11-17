@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
+using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,6 +49,17 @@ namespace cAmp.Libraries.Common.Controllers
                     return File(data, "audio/mp3");
                 }
             }
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        [Route("api/soundfiles/{soundFileId:Guid}/tag")]
+        public ActionResult<TagInfo> GetTag([FromRoute] Guid soundFileId)
+        {
+            _logger.Info($"GET:api/soundfiles/{soundFileId}/tag");
+
+            var tag = _libraryService.GetTag(soundFileId);
 
             return NotFound();
         }
