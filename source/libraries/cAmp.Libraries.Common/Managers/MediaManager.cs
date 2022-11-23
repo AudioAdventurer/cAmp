@@ -112,7 +112,8 @@ namespace cAmp.Libraries.Common.Managers
                 }                
             }
 
-            _logger.Info("Completed library load");            
+            _logger.Info("Completed library load");
+            _logger.Info($"  - {library.Artists.Count} Artists, {library.Albums.Count} Albums, {library.SoundFiles.Count} Songs");
         }
     }
 }

@@ -8,11 +8,13 @@ export default class Next extends Component {
         <span id={`next${this.props.id}`}
               onClick={
                 () => {
-                  if (this.props.soundFileId !== undefined
-                      && this.props.soundFileId !== null) {
-                    this.props.onNext(this.props.soundFileId)
-                  } else {
-                    this.props.onNext();
+                  if (this.props.enabled) {
+                    if (this.props.soundFileId !== undefined
+                        && this.props.soundFileId !== null) {
+                        this.props.onNext(this.props.soundFileId)
+                    } else {
+                        this.props.onNext();
+                    }
                   }
                 }}>
           <BsFillSkipEndFill/>

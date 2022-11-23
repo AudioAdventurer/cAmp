@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using cAmp.Libraries.Common.Objects;
-using Id3;
 using TagLib;
-using File = TagLib.File;
 
 namespace cAmp.Libraries.Common.Helpers
 {

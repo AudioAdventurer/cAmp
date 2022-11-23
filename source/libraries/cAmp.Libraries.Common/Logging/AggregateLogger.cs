@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using cAmp.Libraries.Common.Interfaces;
 
 namespace cAmp.Libraries.Common.Logging
@@ -11,6 +12,11 @@ namespace cAmp.Libraries.Common.Logging
         public AggregateLogger(IEnumerable<IcAmpLogger> loggers)
         {
             _loggers = loggers;
+        }
+
+        public AggregateLogger(params IcAmpLogger[] loggers)
+        {
+            _loggers = loggers.ToList();
         }
 
         public void Verbose(string message)

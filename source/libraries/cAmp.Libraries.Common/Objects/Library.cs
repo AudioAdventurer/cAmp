@@ -75,7 +75,7 @@ namespace cAmp.Libraries.Common.Objects
             {
                 _artists.Add(artist);
                 _artistsById.Add(artist.Id, artist);
-                _artistsByName.Add(artist.Name, artist);
+                _artistsByName.Add(artist.Name.ToLower(), artist);
             }
         }
 
@@ -106,14 +106,16 @@ namespace cAmp.Libraries.Common.Objects
 
         public bool ContainsArtist(string artistName)
         {
-            return _artistsByName.ContainsKey(artistName);
+            return _artistsByName.ContainsKey(artistName.ToLower());
         }
 
         public Artist GetArtistByName(string artistName)
         {
-            if (_artistsByName.ContainsKey(artistName))
+            var lowerArtist = artistName.ToLower();
+
+            if (_artistsByName.ContainsKey(lowerArtist))
             {
-                return _artistsByName[artistName];
+                return _artistsByName[lowerArtist];
             }
 
             return null;
@@ -264,6 +266,5 @@ namespace cAmp.Libraries.Common.Objects
 
             return queue.QueueSize;
         }
-
     }
 }

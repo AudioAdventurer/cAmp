@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using cAmp.Libraries.Common.Interfaces;
+﻿using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Security;
 
 namespace cAmp.Libraries.Common.Services

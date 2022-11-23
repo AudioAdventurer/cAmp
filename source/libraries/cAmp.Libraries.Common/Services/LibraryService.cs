@@ -144,7 +144,12 @@ namespace cAmp.Libraries.Common.Services
 
         public void SaveTag(Guid soundFileId, TagInfo tagInfo)
         {
+            var soundFile = _library.GetSoundFile(soundFileId);
 
+            if (soundFile != null)
+            {
+                TagHelper.SaveTag(soundFile.Filename, tagInfo);
+            }
         }
     }
 }
