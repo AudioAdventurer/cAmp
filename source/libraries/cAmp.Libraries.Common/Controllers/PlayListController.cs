@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Services;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

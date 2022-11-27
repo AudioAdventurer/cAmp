@@ -19,6 +19,7 @@ export default class QueuePlayer extends Component {
     this.state = {
       username: "",
       playing: false,
+      advancing: false,
       shouldStop: false,
       queueSize: 0,
       currentSoundFile: null,
@@ -147,29 +148,29 @@ export default class QueuePlayer extends Component {
             this.getFile(this.state.currentSoundFile.id);
 
             cAmpService.getQueueSize()
-              .then(r => {
-                this.setState({
-                  queueSize: r
-                }, () => {
-                  this.props.refreshed();
+                .then(r => {
+                  this.setState({
+                    queueSize: r
+                  }, () => {
+                    this.props.refreshed();
+                  });
+                })
+                .catch(e => {
+                  toast.error(e.message);
                 });
-              })
-              .catch(e => {
-                toast.error(e.message);
-              });
 
             cAmpService.getNextQueueSong()
-              .then(r => {
-                if (r!=null) {
-                  this.setState({
-                    nextSoundFile: r,
-                    nextSoundFileName: r.title
-                  })
-                }
-              })
-              .catch(e => {
-                toast.error(e.message);
-              });
+                .then(r => {
+                  if (r != null) {
+                    this.setState({
+                      nextSoundFile: r,
+                      nextSoundFileName: r.title
+                    })
+                  }
+                })
+                .catch(e => {
+                  toast.error(e.message);
+                });
 
             this.props.playAdvanced(this.state.currentSoundFile.id);
           });
@@ -179,8 +180,9 @@ export default class QueuePlayer extends Component {
             currentSoundFileName: null,
             nextSoundFile: null,
             nextSoundFileName: null,
-            queueSize: 0
-          }, ()=> {
+            queueSize: 0,
+            advancing: false,
+          }, () => {
             this.handleStop();
             this.props.playAdvanced(null);
           });
@@ -333,21 +335,25 @@ export default class QueuePlayer extends Component {
               </div>
               <div style={{width:'40px', float:'left'}}>
                 <Next
-                  onNext={this.handleNext}/>
+                  enabled={!this.state.advancing}
+                  onNext={this.handleNext} />
               </div>
               <div style={{width:'40px', float:'left'}}>
                 <Stop
-                  onStop={this.handleStop}/>
+                  onStop={this.handleStop} />
               </div>
             </div>
           </Col>
           <Col lg={2}>
-            <RangeSlider
-              value={this.state.volume}
-              style={{width:'80px'}}
-              size='sm'
-              onChange={changeEvent => this.handleVolumeChanged(changeEvent.target.value)}
+            <div>Volume:</div>
+            <div>
+              <RangeSlider
+                  value={this.state.volume}
+                  style={{width:'80px'}}
+                  size='sm'
+                  onChange={changeEvent => this.handleVolumeChanged(changeEvent.target.value)}
               />
+            </div>
           </Col>
           <Col lg={4}>
             Next: {this.getShortenedName(this.state.nextSoundFileName)}

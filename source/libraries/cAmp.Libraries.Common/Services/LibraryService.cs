@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Records;
@@ -120,10 +121,35 @@ namespace cAmp.Libraries.Common.Services
 
         public void ProcessIsFavoriteFlag(Guid userId, IcAmpObject cAmpObject)
         {
-            List<UserInterfaceObjects.SoundFile> soundFiles = new List<UserInterfaceObjects.SoundFile>();
-            soundFiles.Add((UserInterfaceObjects.SoundFile) cAmpObject);
+            List<UserInterfaceObjects.SoundFile> soundFiles = new List<UserInterfaceObjects.SoundFile>
+            {
+                (UserInterfaceObjects.SoundFile) cAmpObject
+            };
 
             _playListService.ProcessIsFavoriteFlag(userId, soundFiles);
+        }
+
+        public TagInfo GetTag(Guid soundFileId)
+        {
+            var soundFile = _library.GetSoundFile(soundFileId);
+
+            if (soundFile != null)
+            {
+                var tagInfo = TagHelper.GetOrBuildTag(soundFile.Filename, true);
+                return tagInfo;
+            }
+
+            return null;
+        }
+
+        public void SaveTag(Guid soundFileId, TagInfo tagInfo)
+        {
+            var soundFile = _library.GetSoundFile(soundFileId);
+
+            if (soundFile != null)
+            {
+                TagHelper.SaveTag(soundFile.Filename, tagInfo);
+            }
         }
     }
 }

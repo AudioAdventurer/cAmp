@@ -3,9 +3,7 @@ using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Services;
 using cAmp.Libraries.Common.UserInterfaceObjects;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TagLib.Riff;
 
 namespace cAmp.Libraries.Common.Controllers
 {

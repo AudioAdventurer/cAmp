@@ -32,8 +32,6 @@ export default class App extends Component {
 
     this.handleQueuePlayerShouldStop = this.handleQueuePlayerShouldStop.bind(this);
     this.handleQueuePlayerShouldRefresh = this.handleQueuePlayerShouldRefresh.bind(this);
-
-
   }
 
   userHasAuthenticated = authenticated => {

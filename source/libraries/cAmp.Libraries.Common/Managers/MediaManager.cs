@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using cAmp.Libraries.Common.Helpers;
 using cAmp.Libraries.Common.Interfaces;
 using cAmp.Libraries.Common.Objects;
 using cAmp.Libraries.Common.Records;
@@ -39,100 +40,42 @@ namespace cAmp.Libraries.Common.Managers
             _logger.Info("Starting library load");
             
             List<string> files = Directory
-                .GetFiles(_musicFolder, "*.mp3", SearchOption.AllDirectories)
+                .GetFiles(musicFolder, "*.mp3", SearchOption.AllDirectories)
                 .ToList();
 
             foreach (var file in files)
             {
                 try
                 {
-                    var tagFile = TagLib.File.Create(file);
+                    var tagInfo = TagHelper.GetOrBuildTag(file, true);
 
-                    if (tagFile != null
-                        && tagFile.Tag != null)
+                    if (tagInfo != null)
                     {
-                        var tag = tagFile.Tag;
-
-                        string title = null;
-                        string artist = "Unknown";
-                        string album = null;
-                        string[] genre = null;
-                        uint trackNumber = 0;
-                        uint year = 0;
-
-                        if (tag?.Title != null)
-                        {
-                            title = tag.Title.Trim();
-                            artist = string.Join(",", tag.Performers);
-                            album = tag.Album.Trim();
-                            genre = tag.Genres;
-                            trackNumber = tag.Track;
-                            year = tag.Year;
-                        }
-                        else
-                        {
-                            string filename = Path.GetFileNameWithoutExtension(file);
-
-                            if (filename.Contains("-"))
-                            {
-                                string[] parts = filename.Split("-");
-
-                                if (parts.Length == 1)
-                                {
-                                    title = parts[0].Trim();
-                                }
-                                else if (parts.Length == 2)
-                                {
-                                    artist = parts[0].Trim();
-                                    title = parts[1].Trim();
-                                }
-                                else
-                                {
-                                    artist = parts[0].Trim();
-                                    album = parts[1].Trim();
-                                    title = parts[2].Trim();
-                                }
-                            }
-                            else
-                            {
-                                string directory = Path.GetDirectoryName(file);
-                                string[] parts = directory.Split(Path.DirectorySeparatorChar);
-
-                                title = filename;
-
-                                if (parts.Length > 2)
-                                {
-                                    album = parts[parts.Length - 1];
-                                    artist = parts[parts.Length - 2];
-                                }
-                            }
-                        }
-
                         Artist artistObject;
-                        if (!library.ContainsArtist(artist))
+                        if (!library.ContainsArtist(tagInfo.Artist))
                         {
-                            artistObject = new Artist { Name = artist };
+                            artistObject = new Artist { Name = tagInfo.Artist };
 
                             library.Add(artistObject);
                         }
                         else
                         {
-                            artistObject = library.GetArtistByName(artist);
+                            artistObject = library.GetArtistByName(tagInfo.Artist);
                         }
 
                         Album albumObject = null;
-                        if (album != null)
+                        if (tagInfo.Album != null)
                         {
                             string folder = Path.GetDirectoryName(file).Trim();
 
-                            albumObject = library.Albums.FirstOrDefault(a => a.Name.Equals(album)
+                            albumObject = library.Albums.FirstOrDefault(a => a.Name.Equals(tagInfo.Album)
                                                                              && a.Folder.Equals(folder));
 
                             if (albumObject == null)
                             {
                                 albumObject = new Album
                                 {
-                                    Name = album,
+                                    Name = tagInfo.Album,
                                     Artist = artistObject,
                                     Folder = folder
                                 };
@@ -147,14 +90,14 @@ namespace cAmp.Libraries.Common.Managers
                             Album = albumObject,
                             Artist = artistObject,
                             Filename = file,
-                            Title = title,
-                            TrackNumber = trackNumber,
-                            Year = year
+                            Title = tagInfo.Title,
+                            TrackNumber = tagInfo.TrackNumber,
+                            Year = tagInfo.Year
                         };
 
-                        if (genre?.Length > 0)
+                        if (tagInfo.Genre?.Length > 0)
                         {
-                            soundFile.Genre.AddRange(genre);
+                            soundFile.Genre.AddRange(tagInfo.Genre);
                         }
 
                         library.Add(soundFile);
@@ -169,7 +112,8 @@ namespace cAmp.Libraries.Common.Managers
                 }                
             }
 
-            _logger.Info("Completed library load");            
+            _logger.Info("Completed library load");
+            _logger.Info($"  - {library.Artists.Count} Artists, {library.Albums.Count} Albums, {library.SoundFiles.Count} Songs");
         }
     }
 }

@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Execute Changes": {
+      "commandName": "Project",
+      "commandLineArgs": "execute\r\nC:\\Media\\ProposedChanges.json"
+    },
+    "Create Changes": {
+      "commandName": "Project",
+      "commandLineArgs": "audit\r\nC:\\Media\\Songs\r\nC:\\Media\\Songs2\r\nC:\\Media\\ProposedChanges.json\r\n"
+    }
+  }
+}

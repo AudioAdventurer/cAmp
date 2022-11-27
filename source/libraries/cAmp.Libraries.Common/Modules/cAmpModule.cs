@@ -23,7 +23,16 @@ namespace cAmp.Libraries.Common.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ConsoleLogger>()
+            builder.Register(c =>
+                {
+                    var consoleLogger = new ConsoleLogger();
+
+                    var logEntryRepo = c.Resolve<LogEntryRepo>();
+                    var databaseLogger = new DatabaseLogger(logEntryRepo);
+
+                    var aggregateLogger = new AggregateLogger(consoleLogger, databaseLogger);
+                    return aggregateLogger;
+                })
                 .As<IcAmpLogger>();
 
             builder.RegisterType<MediaManager>()
@@ -68,6 +77,7 @@ namespace cAmp.Libraries.Common.Modules
                 .SingleInstance();
 
             //Register Repos
+            builder.RegisterType<LogEntryRepo>();
             builder.RegisterType<PlayHistoryRepo>();
             builder.RegisterType<PlayListRepo>();
             builder.RegisterType<PlayListSoundFileRepo>();
